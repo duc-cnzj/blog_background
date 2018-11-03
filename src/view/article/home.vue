@@ -76,7 +76,7 @@ export default {
           render: (h, params) => {
             return h('div', {
               domProps: {
-                innerHTML: this.getHighlightRow(params, 'category', true)
+                innerHTML: this.getHighlightRow(params, 'category')
               }
             })
           }
@@ -145,7 +145,7 @@ export default {
         return params.row.highlight !== undefined && params.row.highlight[rowName] !== null ? params.row.highlight[rowName] : _.map(params.row[rowName], 'name').join(',')
       }
 
-      return params.row.highlight !== undefined && params.row.highlight[rowName] !== null ? params.row.highlight[rowName] : params.row[rowName]
+      return params.row.highlight !== undefined && params.row.highlight[rowName] !== null ? params.row.highlight[rowName] : (params.row[rowName] instanceof Object ? params.row[rowName].name : params.row[rowName])
     },
 
     delete ({ id, index }) {
