@@ -76,7 +76,7 @@ export default {
           render: (h, params) => {
             return h('div', {
               domProps: {
-                innerHTML: this.getHighlightRow(params, 'category')
+                innerHTML: this.getHighlightRow(params, 'category', true)
               }
             })
           }
