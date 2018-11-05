@@ -133,7 +133,7 @@ export default {
     async  fetchArticleBy (id) {
       const { data: { data } } = await getArticleBy({ id })
       this.fetehed = true
-      this.formData.category = data.category
+      this.formData.category = data.category.name
       this.formData.content = data.content_md
       this.formData.title = data.title
       this.formData.desc = data.desc
