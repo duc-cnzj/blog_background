@@ -111,6 +111,7 @@ export default {
   }
 }
 </script>
+
 <style>
 .demo-upload-list {
   display: inline-block;

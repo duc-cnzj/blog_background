@@ -45,8 +45,14 @@ class HttpRequest {
     instance.interceptors.response.use(
       res => {
         this.destroy(url)
-        const { data, status } = res
-        return { data, status }
+        console.log('duc')
+        console.log(res)
+
+        // const { data, status } = res
+        // console.log(res)
+        // console.log(data, status)
+
+        return res
       },
       error => {
         this.destroy(url)

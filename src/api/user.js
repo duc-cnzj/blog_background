@@ -25,3 +25,15 @@ export const logout = (token) => {
     method: 'post'
   })
 }
+
+export function updateInfo (payload) {
+  console.log('pay')
+
+  console.log(payload)
+
+  return axios.request({
+    url: '/admin/update_info',
+    method: 'post',
+    data: payload
+  })
+}
