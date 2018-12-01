@@ -15,13 +15,35 @@
 
       <Col span="17">
       <Card :bordered="false">
-        <p slot="title">No border title</p>
-        <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
+        <Tabs value="name1">
+          <TabPane
+            label="文章"
+            name="name1"
+          >
+          <my-articles></my-articles>
+          </TabPane>
+          <TabPane
+            label="标签二"
+            name="name2"
+          >标签二的内容</TabPane>
+          <TabPane
+            label="标签三"
+            name="name3"
+          >标签三的内容</TabPane>
+        </Tabs>
       </Card>
       </Col>
     </Row>
   </div>
 </template>
+
+<script>
+import MyArticles from './sub/MyArticles'
+
+export default {
+  components: { MyArticles }
+}
+</script>
 
 <style lang="scss" scoped>
 .account-center-avatarHolder {

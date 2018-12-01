@@ -33,14 +33,22 @@ export const store = payload => {
   })
 }
 
-export const deleteArticle = (id) => {
+export const deleteArticle = id => {
   return axios.request({
     url: `/admin/articles/${id}`,
     method: 'delete'
   })
 }
 
-export const update = ({ id, content, desc, title, headImage, category, tags }) => {
+export const update = ({
+  id,
+  content,
+  desc,
+  title,
+  headImage,
+  category,
+  tags
+}) => {
   console.log('here')
 
   return axios.request({
@@ -82,6 +90,17 @@ export const elasticSearchArticle = ({ query }) => {
     url: '/search_articles',
     params: {
       q: query
+    },
+    method: 'get'
+  })
+}
+
+export const adminElasticSearchArticle = ({ all = false, query }) => {
+  return axios.request({
+    url: '/admin/search_articles',
+    params: {
+      q: query,
+      all
     },
     method: 'get'
   })

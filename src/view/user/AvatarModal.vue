@@ -56,13 +56,11 @@
 </template>
 <script>
 import { VueCropper } from 'vue-cropper'
-import Cropper from './Cropper'
 import { mapActions } from 'vuex'
 
 export default {
   components: {
-    VueCropper,
-    Cropper
+    VueCropper
   },
   props: {
     avatarSrc: {

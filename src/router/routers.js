@@ -257,7 +257,7 @@ export default [
         meta: {
           access: ['super_admin'],
           icon: 'ios-bookmarks',
-          title: '用户中心'
+          title: '个人中心'
         },
         component: () => import('@/view/user/UserCenter.vue')
       },
@@ -267,7 +267,7 @@ export default [
         meta: {
           access: ['super_admin'],
           icon: 'ios-bookmarks',
-          title: '用户设置'
+          title: '个人设置'
         },
         component: () => import('@/view/user/UserSetting.vue')
       }

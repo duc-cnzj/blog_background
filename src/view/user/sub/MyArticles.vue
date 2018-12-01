@@ -1,8 +1,6 @@
 <template>
     <div>
-        <Card title="文章列表">
-          <article-index :all="true"></article-index>
-        </Card>
+        <article-index :all="false"></article-index>
     </div>
 </template>
 
