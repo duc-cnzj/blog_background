@@ -48,11 +48,9 @@ export default {
           userName,
           password
         })
-          .then(res => {
-            const data = res.data
-            // console.log(data)
-
+          .then(({ data }) => {
             commit('setToken', `${data.token_type} ${data.access_token}`)
+
             resolve()
           })
           .catch(err => {
@@ -90,9 +88,9 @@ export default {
           email
         })
           .then(({ data }) => {
-            commit('setBio', data.data.bio)
-            commit('setEmail', data.data.email)
-            commit('setUserName', data.data.name)
+            commit('setBio', data.bio)
+            commit('setEmail', data.email)
+            commit('setUserName', data.name)
             resolve()
           })
           .catch(e => reject(e))
@@ -103,12 +101,10 @@ export default {
       return new Promise((resolve, reject) => {
         updateInfo(avatar)
           .then(({ data }) => {
-            console.log('res.data')
-            console.log(data)
-            console.log(data.data.avatar)
+            console.log(data.avatar)
 
-            commit('setAvator', data.data.avatar)
-            resolve(data.data.avatar)
+            commit('setAvator', data.avatar)
+            resolve(data.avatar)
           })
           .catch(e => reject(e))
       })
@@ -118,10 +114,8 @@ export default {
     getUserInfo ({ state, commit }) {
       return new Promise((resolve, reject) => {
         try {
-          getUserInfo(state.token)
-            .then(res => {
-              const data = res.data.data
-
+          getUserInfo()
+            .then(({ data }) => {
               commit('setAvator', data.avatar)
               commit('setUserName', data.name)
               commit('setBio', data.bio)

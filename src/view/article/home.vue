@@ -206,11 +206,13 @@ export default {
     },
 
     async fetchArticles () {
-      const { data } = await index({
+      const data = await index({
         page: this.page,
         pageSize: this.pageSize,
         query: this.search
       })
+      console.log(data)
+
       this.dataSet = data
     },
 

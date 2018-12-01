@@ -98,10 +98,13 @@ export default {
   },
 
   created () {
-    this.formItem = Object.assign({}, this.$store.state.user)
+    this.setUser()
   },
 
   methods: {
+    setUser () {
+      this.formItem = Object.assign({}, this.$store.state.user)
+    },
 
     reset () {
       this.setUser()

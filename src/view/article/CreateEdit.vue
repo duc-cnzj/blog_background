@@ -131,7 +131,9 @@ export default {
 
   methods: {
     async  fetchArticleBy (id) {
-      const { data: { data } } = await getArticleBy({ id })
+      const { data } = await getArticleBy({ id })
+      console.log(data)
+
       this.fetehed = true
       this.formData.category = data.category.name
       this.formData.content = data.content_md
@@ -165,7 +167,7 @@ export default {
       searchCategories({
         query: search
       }).then(({ data }) => {
-        const categories = _.map(data.data, 'name')
+        const categories = _.map(data, 'name')
         vm.categories = categories
         loading(false)
       })
