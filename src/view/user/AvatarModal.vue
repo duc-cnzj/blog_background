@@ -93,6 +93,7 @@ export default {
 
   methods: {
     ...mapActions(['setAvatar']),
+
     onUpload () {
       console.log(this.$refs.uploadBtn)
 
@@ -127,6 +128,7 @@ export default {
     },
 
     edit (id) {
+      this.$refs.cropper.refresh()
       this.visible = true
       this.id = id
       /* 获取原始头像 */
