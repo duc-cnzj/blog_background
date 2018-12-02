@@ -1,12 +1,13 @@
 import axios from '@/libs/api.request'
 
-export const index = ({ page, pageSize, query }) => {
+export const index = ({ page, pageSize, query, all }) => {
   return axios.request({
     url: '/admin/articles',
     params: {
       page: page,
       page_size: pageSize,
-      query: query
+      query: query,
+      all
     },
     method: 'get'
   })
