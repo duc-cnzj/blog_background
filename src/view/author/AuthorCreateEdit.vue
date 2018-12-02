@@ -5,18 +5,19 @@
       <Row>
         <Col span="16">
         <Form
+        ref="formValidate"  :rules="ruleValidate"
           :model="author"
           :label-width="180"
           style="width: 80%"
         >
-          <FormItem label="昵称">
+          <FormItem label="昵称" prop="name">
             <Input
               v-model="author.name"
               placeholder="your name.."
             ></Input>
           </FormItem>
 
-          <FormItem label="Bio">
+          <FormItem label="Bio" prop="bio">
             <Input
               v-model="author.bio"
               type="textarea"
@@ -25,20 +26,20 @@
             ></Input>
           </FormItem>
 
-          <FormItem label="邮箱地址📮">
+          <FormItem label="邮箱地址📮" prop="email">
             <Input
               v-model="author.email"
               placeholder="example@xxx.com"
             ></Input>
           </FormItem>
-          <FormItem label="手机号码📱">
+          <FormItem label="手机号码📱" prop="mobile">
             <Input
               v-model="author.mobile"
               placeholder="18888xxxx88"
             ></Input>
           </FormItem>
 
-          <FormItem label="登陆密码">
+          <FormItem label="登陆密码" prop="password">
             <Input
               type="password"
               v-model="author.password"
@@ -108,7 +109,24 @@ export default {
         password: '',
         avatar: null
       },
-      imgSrc: ''
+      imgSrc: '',
+      ruleValidate: {
+        name: [
+          { required: true, message: '用户名称必填！', trigger: 'blur' }
+        ],
+        bio: [
+          { required: true, message: '用户bio必填！', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '用户密码必填！', trigger: 'blur' }
+        ],
+        email: [
+          { required: true, message: '用户邮箱必填！', trigger: 'blur' }
+        ],
+        mobile: [
+          { required: true, message: '用户手机号必填', trigger: 'blur' }
+        ]
+      }
     }
   },
 
@@ -122,8 +140,15 @@ export default {
       this.imgSrc = URL.createObjectURL(data)
     },
     onSubmit () {
-      const user = storeUser(this.author).then(res => log(res))
-      console.log(user)
+      this.$refs['formValidate'].validate((valid) => {
+        if (valid) {
+          storeUser(this.author).then(() => {
+            this.$Message.success('Success!')
+          })
+        } else {
+          this.$Message.error('Fail!')
+        }
+      })
     },
     // async onSubmit () {
     //   const user = await storeUser(this.author)
