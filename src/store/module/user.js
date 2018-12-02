@@ -99,7 +99,7 @@ export default {
 
     setAvatar ({ commit }, avatar) {
       return new Promise((resolve, reject) => {
-        updateInfo(avatar)
+        updateInfo({ avatar })
           .then(({ data }) => {
             console.log(data.avatar)
 

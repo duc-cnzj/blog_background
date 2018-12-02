@@ -34,11 +34,42 @@ export const logout = token => {
 }
 
 export function updateInfo (payload) {
-  console.log('updateInfo')
+  let { name, bio, email, avatar = null } = payload
+  let formData = new FormData()
+  if (avatar !== null) {
+    console.log(avatar)
+
+    formData.append('avatar', avatar, 'avatar.jpg')
+  } else {
+    formData.append('name', name)
+    formData.append('bio', bio)
+    formData.append('email', email)
+  }
+  console.log('storeUser')
 
   return axios.request({
     url: '/admin/update_info',
     method: 'post',
-    data: payload
+    data: formData
+  })
+}
+
+export function storeUser (payload) {
+  let { name, bio, email, mobile, password, avatar } = payload
+  let formData = new FormData()
+  if (avatar !== null) {
+    formData.append('avatar', avatar, 'avatar.jpg')
+  }
+  formData.append('name', name)
+  formData.append('bio', bio)
+  formData.append('mobile', mobile)
+  formData.append('email', email)
+  formData.append('password', password)
+  console.log('storeUser')
+
+  return axios.request({
+    url: '/admin/users',
+    method: 'post',
+    data: formData
   })
 }

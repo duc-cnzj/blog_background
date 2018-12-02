@@ -37,15 +37,21 @@
               </FormItem>
 
               <FormItem>
-                <Button type="primary" @click="onSubmit">保存</Button>
-                <Button style="margin-left: 8px" @click="reset">重置</Button>
+                <Button
+                  type="primary"
+                  @click="onSubmit"
+                >保存</Button>
+                <Button
+                  style="margin-left: 8px"
+                  @click="reset"
+                >重置</Button>
               </FormItem>
             </Form>
             </Col>
             <Col span="8">
             <div
               class="ant-upload-preview"
-              @click="$refs.modal.edit(1)"
+              @click="$refs.modal.edit()"
             >
               <Icon
                 type="ios-cloud-upload-outline"
@@ -62,6 +68,8 @@
             <avatar-modal
               ref="modal"
               :avatarSrc="$store.state.user.avatorImgPath"
+              @avatar-onsave="avatarSave"
+              @avatar-oncancel="avatarCancel"
             >
             </avatar-modal>
           </Row>
@@ -81,7 +89,7 @@
 </template>
 <script>
 import UploadImage from '@/components/upload/UploadImage'
-import AvatarModal from './AvatarModal'
+import AvatarModal from '_c/user/AvatarModal'
 
 export default {
   name: 'userCenter',
@@ -91,8 +99,8 @@ export default {
       formItem: {
         name: '',
         bio: '',
-        email: ''
-
+        email: '',
+        avatar: null
       }
     }
   },
@@ -102,6 +110,20 @@ export default {
   },
 
   methods: {
+    avatarSave (data) {
+      console.log(data)
+
+      this.$store
+        .dispatch('setAvatar', data)
+        .then(() => {
+          this.$Message.success('头像更新成功！')
+        })
+    },
+
+    avatarCancel () {
+
+    },
+
     setUser () {
       this.formItem = Object.assign({}, this.$store.state.user)
     },
@@ -111,13 +133,16 @@ export default {
     },
 
     onSubmit () {
-      this.$store.dispatch('UpdateInfo', this.formItem).then(() => {
-        this.$Message.success('用户信息更新成功！')
-      }).catch((e) => {
-        console.log(e)
+      this.$store
+        .dispatch('UpdateInfo', this.formItem)
+        .then(() => {
+          this.$Message.success('用户信息更新成功！')
+        })
+        .catch(e => {
+          console.log(e)
 
-        this.$Message.error('用户信息更新失败！')
-      })
+          this.$Message.error('用户信息更新失败！')
+        })
     }
   }
 }

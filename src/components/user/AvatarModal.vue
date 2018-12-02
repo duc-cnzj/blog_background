@@ -56,7 +56,6 @@
 </template>
 <script>
 import { VueCropper } from 'vue-cropper'
-import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -74,7 +73,6 @@ export default {
       oSrc: '',
       crap: false,
       visible: false,
-      id: null,
       loading: false,
 
       options: {
@@ -92,8 +90,6 @@ export default {
   },
 
   methods: {
-    ...mapActions(['setAvatar']),
-
     onUpload () {
       console.log(this.$refs.uploadBtn)
 
@@ -118,6 +114,7 @@ export default {
           data = e.target.result
         }
 
+        this.$refs.cropper.refresh()
         this.oSrc = data
       }
 
@@ -127,18 +124,16 @@ export default {
       // reader.readAsArrayBuffer(file);
     },
 
-    edit (id) {
+    edit () {
+      this.oSrc = this.avatarSrc
       this.$refs.cropper.refresh()
       this.visible = true
-      this.id = id
-      /* 获取原始头像 */
     },
 
     close () {
-      this.oSrc = this.avatarSrc
-      this.$refs.cropper.refresh()
-      this.id = null
       this.visible = false
+      // this.$refs.cropper.refresh()
+      this.$emit('avatar-oncancel')
     },
 
     cancelHandel () {
@@ -147,13 +142,16 @@ export default {
 
     okHandel () {
       this.$refs.cropper.getCropBlob(data => {
-        let formData = new FormData()
-        formData.append('avatar', data, 'avatar.jpg')
-        this.setAvatar(formData).then((avatar) => {
-          this.visible = false
-          this.$Message.success('头像修改成功！')
-        })
+        console.log('ehere')
+
+        this.$emit('avatar-onsave', data)
       })
+
+      this.hiddenModal()
+    },
+
+    hiddenModal () {
+      this.visible = false
     },
 
     realTime (data) {
@@ -168,8 +166,8 @@ export default {
   position: absolute;
   top: 50%;
   transform: translate(50%, -50%);
-  width: 180px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
   box-shadow: 0 0 4px #ccc;
   overflow: hidden;

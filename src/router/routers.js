@@ -246,7 +246,7 @@ export default [
     name: 'user',
     meta: {
       icon: 'md-menu',
-      title: '用户管理'
+      title: '个人页'
     },
     redirect: '/user/center',
     component: Main,
@@ -273,6 +273,40 @@ export default [
       }
     ]
   },
+
+  {
+    path: '/authors',
+    name: 'authors',
+    meta: {
+      icon: 'md-menu',
+      title: '用户中心'
+    },
+    redirect: '/authors/center',
+    component: Main,
+    children: [
+      // {
+      //   path: 'center',
+      //   name: 'author_center',
+      //   meta: {
+      //     access: ['super_admin'],
+      //     icon: 'ios-bookmarks',
+      //     title: '用户列表'
+      //   },
+      //   component: () => import('@/view/author/AuthorList.vue')
+      // },
+      {
+        path: 'add_author',
+        name: 'author_create_edit',
+        meta: {
+          access: ['super_admin'],
+          icon: 'ios-bookmarks',
+          title: '添加用户'
+        },
+        component: () => import('@/view/author/AuthorCreateEdit.vue')
+      }
+    ]
+  },
+
   {
     path: '/article',
     name: 'article',
