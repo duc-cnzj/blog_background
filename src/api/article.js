@@ -95,7 +95,7 @@ export const elasticSearchArticle = ({ query }) => {
   })
 }
 
-export const adminElasticSearchArticle = ({ all = false, query }) => {
+export const adminElasticSearchArticle = ({ all = 0, query }) => {
   return axios.request({
     url: '/admin/search_articles',
     params: {

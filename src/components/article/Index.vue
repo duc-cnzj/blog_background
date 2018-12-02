@@ -252,6 +252,7 @@ export default {
 
     async fetchArticles () {
       const data = await index({
+        all: 1,
         page: this.page,
         pageSize: this.pageSize,
         query: this.search
