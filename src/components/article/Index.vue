@@ -201,10 +201,13 @@ export default {
         content: '确认要删除这篇文章吗？',
         loading: true,
         onOk: () => {
-          deleteArticle(id).then(res => {
+          deleteArticle(1).then(res => {
             this.$Modal.remove()
             this.$Message.success('删除成功')
             this.dataSet.data = _.reject(this.dataSet.data, { id: id })
+          }).catch(e => {
+            this.$Modal.remove()
+            this.$Message.error(e.data.error.message)
           })
         }
       })

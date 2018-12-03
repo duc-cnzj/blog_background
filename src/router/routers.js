@@ -284,16 +284,16 @@ export default [
     redirect: '/authors/center',
     component: Main,
     children: [
-      // {
-      //   path: 'center',
-      //   name: 'author_center',
-      //   meta: {
-      //     access: ['super_admin'],
-      //     icon: 'ios-bookmarks',
-      //     title: '用户列表'
-      //   },
-      //   component: () => import('@/view/author/AuthorList.vue')
-      // },
+      {
+        path: 'center',
+        name: 'author_center',
+        meta: {
+          access: ['super_admin'],
+          icon: 'ios-bookmarks',
+          title: '用户列表'
+        },
+        component: () => import('@/view/author/AuthorList.vue')
+      },
       {
         path: 'add_author',
         name: 'author_create_edit',

@@ -143,10 +143,13 @@ export default {
       this.$refs['formValidate'].validate((valid) => {
         if (valid) {
           storeUser(this.author).then(() => {
-            this.$Message.success('Success!')
+            this.$Message.success('用户添加成功!')
+            this.$router.push({ name: 'author_center' })
+          }).catch(e => {
+            console.log(e)
           })
         } else {
-          this.$Message.error('Fail!')
+          this.$Message.error('请输入完整信息!')
         }
       })
     },

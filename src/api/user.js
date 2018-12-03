@@ -73,3 +73,15 @@ export function storeUser (payload) {
     data: formData
   })
 }
+
+export function refresh (token) {
+  console.log(token)
+
+  return axios.request({
+    url: '/auth/refresh',
+    method: 'post',
+    headers: {
+      'Authorization': token
+    }
+  })
+}

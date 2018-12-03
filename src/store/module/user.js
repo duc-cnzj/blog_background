@@ -1,5 +1,11 @@
-import { login, logout, getUserInfo, updateInfo } from '@/api/user'
-import { setToken, getToken } from '@/libs/util'
+import { login, logout, getUserInfo, updateInfo, refresh } from '@/api/user'
+import {
+  setToken,
+  getToken,
+  setRemember,
+  setRefreshToken,
+  getRefreshToken
+} from '@/libs/util'
 
 export default {
   state: {
@@ -28,9 +34,9 @@ export default {
     setAccess (state, access) {
       state.access = access
     },
-    setToken (state, token) {
+    setToken (state, { token, expiresIn }) {
       state.token = token
-      setToken(token)
+      setToken(token, expiresIn / (60 * 60 * 24))
     },
     setEmail (state, email) {
       state.email = email
@@ -41,7 +47,7 @@ export default {
   },
   actions: {
     // 登录
-    handleLogin ({ commit }, { userName, password }) {
+    handleLogin ({ commit }, { userName, password, remember }) {
       userName = userName.trim()
       return new Promise((resolve, reject) => {
         login({
@@ -49,7 +55,19 @@ export default {
           password
         })
           .then(({ data }) => {
-            commit('setToken', `${data.token_type} ${data.access_token}`)
+            let {
+              token_type: tokenType,
+              access_token: accessToken,
+              expires_in: expiresIn,
+              refresh_ttl: refreshTtl
+            } = data
+            let token = tokenType + accessToken
+
+            commit('setToken', { token, expiresIn })
+            setRemember(remember)
+            if (remember) {
+              setRefreshToken(token, refreshTtl / (60 * 60 * 24))
+            }
 
             resolve()
           })
@@ -64,6 +82,9 @@ export default {
         logout(state.token)
           .then(() => {
             commit('setToken', '')
+            setToken('')
+            setRemember(false)
+            setRefreshToken('')
             commit('setAccess', [])
             resolve()
           })
@@ -107,6 +128,39 @@ export default {
             resolve(data.avatar)
           })
           .catch(e => reject(e))
+      })
+    },
+
+    refreshToken ({ commit }) {
+      let token = getRefreshToken()
+
+      return new Promise((resolve, reject) => {
+        try {
+          refresh(token)
+            .then(({ data }) => {
+              let {
+                token_type: tokenType,
+                access_token: accessToken,
+                expires_in: expiresIn,
+                refresh_ttl: refreshTtl
+              } = data
+              let token = tokenType + accessToken
+
+              commit('setToken', { token, expiresIn })
+              setRefreshToken(token, refreshTtl / (60 * 60 * 24))
+              dispatch('getUserInfo')
+
+              resolve(data)
+            })
+            .catch(err => {
+              setToken('')
+              setRefreshToken('')
+              setRemember(false)
+              reject(err)
+            })
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 

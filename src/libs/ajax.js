@@ -1,6 +1,14 @@
 import axios from 'axios'
 import router from '../router'
-import { getToken, setToken } from '@/libs/util'
+import store from '../store/index'
+import { Message } from 'iview'
+import _ from 'lodash'
+import {
+  setToken,
+  getToken,
+  getRefreshToken,
+  getRemember
+} from '@/libs/util'
 
 // 创建实例时设置配置的默认值
 var instance = axios.create({
@@ -13,7 +21,9 @@ var instance = axios.create({
 // 添加请求拦截器
 instance.interceptors.request.use(
   function (config) {
-    config.headers['Authorization'] = getToken() || ''
+    if (!config.headers['Authorization']) {
+      config.headers['Authorization'] = getToken() || ''
+    }
     // 在发送请求之前做些什么
     return config
   },
@@ -34,24 +44,42 @@ instance.interceptors.response.use(
 
     if (error.response) {
       if (error.response.status === 401) {
+        console.log('here')
+
         if (router.currentRoute.name !== 'login') {
-          if (getToken() !== '' || getToken() !== undefined) {
+          console.log('here2')
+          if (getRemember() && getRefreshToken()) {
+            console.log('here3')
+            store.dispatch('refreshToken')
+          } else {
+            console.log('here4')
             Message.error('登陆过期请重新登陆！')
+            setToken('')
+            router.push({
+              name: 'login'
+            })
           }
-          setToken('')
-          router.push({
-            name: 'login'
-          })
         }
+      } else if (error.response.status === 422) {
+        let err = error.response.data.error.errors
+
+        let m = _.map(err, 'message')
+        m.map((i) => {
+          Message.error(i)
+        })
+      } else {
+        // Message.error('da')
       }
     } else {
       if (error.message === 'Network Error') {
         Message.error('请检查网络是否通畅')
+
+        return Promise.reject(error)
       }
     }
 
     // 对响应错误做点什么
-    return Promise.reject(error)
+    return Promise.reject(error.response)
   }
 )
 

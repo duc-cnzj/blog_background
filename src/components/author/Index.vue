@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <Row :gutter="32">
 
       <i-col
@@ -17,14 +16,14 @@
       </i-col>
 
     </Row>
-    <Row :gutter="20">
+    <Row :gutter="20" v-if="users!==null">
       <i-col>
         <Table
           border
           ref="selection"
           :columns="columns"
           @on-selection-change="onSelectionChange"
-          :data="dataSet.data"
+          :data="users.data"
         ></Table>
       </i-col>
 
@@ -47,10 +46,10 @@
           <i-col
             span="16"
             offset="2"
-            v-if="dataSet.meta !== undefined"
+            v-if="users.meta !== undefined"
           >
             <Page
-              :total="dataSet.meta.total"
+              :total="users.meta.total"
               @on-change="pageOnChange"
               @on-page-size-change="onPageSizeChange"
               show-sizer
@@ -64,16 +63,13 @@
   </div>
 </template>
 <script>
-import _ from 'lodash'
-import { index, deleteArticle, adminElasticSearchArticle } from '@/api/article'
 
 export default {
-  props: ['all'],
+  props: ['users'],
   data () {
     return {
       selectedRows: [],
-      search: '',
-      dataSet: [],
+      dataSet: null,
       page: 1,
       pageSize: 10,
       columns: [
@@ -83,38 +79,53 @@ export default {
           align: 'center'
         },
         {
-          title: '标题',
-          key: 'title',
+          title: '姓名',
+          key: 'name',
+          align: 'center',
           render: (h, params) => {
             return h('div', {
-              domProps: {
-                innerHTML: this.getHighlightRow(params, 'title')
+              attrs: {
+                // lineHeight: '20px'
               }
-            })
+            }, [
+
+              h('img', {
+                style: {
+                  width: '50px',
+                  height: '50px',
+                  borderRadius: '50%',
+                  marginTop: '5px'
+                },
+                attrs: {
+                  src: params.row.avatar
+                }
+              }),
+
+              h('p', {
+                style: {
+                  fontSize: '16px'
+                }
+              }, params.row.name)
+            ])
           }
         },
         {
-          title: '分类',
-          key: 'category',
-          render: (h, params) => {
-            return h('div', {
-              domProps: {
-                innerHTML: this.getHighlightRow(params, 'category')
-              }
-            })
-          }
+          title: 'bio',
+          key: 'bio'
         },
         {
-          title: '标签',
-          key: 'tags',
-          render: (h, params) => {
-            return h('span', {
-              domProps: {
-                innerHTML: this.getHighlightRow(params, 'tags', true)
-              }
-            })
-          }
+          title: '邮箱',
+          key: 'email'
         },
+        {
+          title: '手机号',
+          key: 'mobile'
+        },
+        {
+          title: '创建时间',
+          key: 'created_at'
+        },
+
         {
           title: 'Action',
           key: 'action',
@@ -134,7 +145,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.edit(params.row.id)
+                      // this.edit(params.row.id)
                     }
                   }
                 },
@@ -166,95 +177,40 @@ export default {
   },
 
   created () {
-    this.fetchArticles()
+    this.dataSet = this.users
   },
 
   methods: {
-    getHighlightRow (params, rowName, array = false) {
-      if (array) {
-        return params.row.highlight !== undefined &&
-          params.row.highlight[rowName] !== null
-          ? params.row.highlight[rowName]
-          : _.map(params.row[rowName], 'name').join(',')
-      }
-
-      return params.row.highlight !== undefined &&
-        params.row.highlight[rowName] !== null
-        ? params.row.highlight[rowName]
-        : params.row[rowName] instanceof Object
-          ? params.row[rowName].name
-          : params.row[rowName]
-    },
-
-    delete ({ id, index }) {
-      let title = this.dataSet.data[index].title
-
-      this.$Modal.confirm({
-        title: `删除${title}`,
-        content: '确认要删除这篇文章吗？',
-        loading: true,
-        onOk: () => {
-          deleteArticle(id).then(res => {
-            this.$Modal.remove()
-            this.$Message.success('删除成功')
-            this.dataSet.data = _.reject(this.dataSet.data, { id: id })
-          })
-        }
-      })
-    },
-
-    edit (id) {
-      this.$router.push({
-        name: 'article_create_edit',
-        params: {
-          id: id
-        }
-      })
-    },
-
-    searchArticle () {
-      if (!this.search) {
-        this.fetchArticles()
-      } else {
-        this.elasticSearchArticle()
-      }
-    },
-
-    async elasticSearchArticle () {
-      const data = await adminElasticSearchArticle({
-        query: this.search,
-        all: this.all ? 1 : 0
-      })
-      this.dataSet = data
-    },
-
     addUser () {
       this.$router.push({ name: 'author_create_edit' })
     },
 
     onPageSizeChange (pageSize) {
       this.pageSize = pageSize
-      this.fetchArticles()
+      this.$emit('page-size-change', pageSize)
     },
 
     pageOnChange (page) {
       this.page = page
-      this.fetchArticles()
+      this.$emit('page-change', page)
     },
 
     onSelectionChange (s) {
       this.selectedRows = s
     },
 
-    async fetchArticles () {
-      const data = await index({
-        page: this.page,
-        pageSize: this.pageSize,
-        query: this.search
-      })
-      console.log(data)
+    delete ({ id, index }) {
+      let name = this.users.data[index].name
 
-      this.dataSet = data
+      this.$Modal.confirm({
+        title: `删除 ${name}`,
+        content: '确认要删除这个用户吗？',
+        loading: true,
+        onOk: () => {
+          console.log(id, index)
+          this.$emit('delete-user', { id, index })
+        }
+      })
     },
 
     handleSelectAll (status) {
