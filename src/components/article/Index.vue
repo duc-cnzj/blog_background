@@ -83,7 +83,7 @@
         <h1 style="text-align:center;margin-bottom: 20px;">{{previewArticle.title}}</h1>
         <Divider dashed />
       </div>
-      <p
+      <p class="preview"
         v-html="previewArticle.content"
         v-highlight
       ></p>
@@ -344,4 +344,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.preview {
+  img {width: 100%}
+}
 </style>
