@@ -12,6 +12,7 @@ import highlight from '@/directive/highlight'
 import 'iview/dist/styles/iview.css'
 import './index.less' //
 import '@/assets/icons/iconfont.css'
+import '@/styles/index.scss'
 import vSelect from 'vue-select'
 
 Vue.component('v-select', vSelect)

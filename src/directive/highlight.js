@@ -1,5 +1,6 @@
 import hljs from 'highlight.js'
 import 'highlight.js/styles/atom-one-dark.css' // 样式文件
+// import 'highlight.js/styles/xcode.css'
 
 let DucHighlight = {}
 

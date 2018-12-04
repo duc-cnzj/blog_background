@@ -6,7 +6,6 @@
 
 <script>
 import Simplemde from 'simplemde'
-import 'simplemde/dist/simplemde.min.css'
 import '@/plugins/inline-attachment'
 import '@/plugins/codemirror.inline-attachment'
 import { getToken } from '@/libs/util'
@@ -104,17 +103,7 @@ export default {
 }
 </script>
 
-<style lang="less">
-@import "~highlight.js/styles/xcode.css";
-.markdown-wrapper{
-  .editor-toolbar.fullscreen{
-    z-index: 9999;
-  }
-  .CodeMirror-fullscreen{
-    z-index: 9999;
-  }
-  .CodeMirror-fullscreen ~ .editor-preview-side{
-    z-index: 9999;
-  }
-}
+<style scoped>
+/* @import "~highlight.js/styles/xcode.css"; */
+/* @import '~highlight.js/styles/atom-one-dark.css'; */
 </style>
