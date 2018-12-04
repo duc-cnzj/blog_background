@@ -1,67 +1,146 @@
 <template>
-    <div>
-        <Card :bordered="false">
-            <p slot="title">添加文章</p>
-            <Form ref="formData" :model="formData" :rules="ruleValidate" label-position="right" :label-width="100">
-                <Row>
-                    <Col span="12" offset="4">
-                    <FormItem label="文章标题" prop="title">
-                        <Input v-model="formData.title"></Input>
-                    </FormItem>
+  <div>
+    <Card :bordered="false">
+      <p slot="title">添加文章</p>
+      <Form
+        ref="formData"
+        :model="formData"
+        :rules="ruleValidate"
+        label-position="right"
+        :label-width="100"
+      >
+        <Row>
+          <Col
+            span="12"
+            offset="4"
+          >
+          <FormItem
+            label="文章标题"
+            prop="title"
+          >
+            <Input v-model="formData.title"></Input>
+          </FormItem>
 
-                    </Col>
-                    <Col span="16" offset="4">
-                    <FormItem label="文章描述" prop="desc">
-                        <Input v-model="formData.desc"></Input>
-                    </FormItem>
-                    </Col>
+          </Col>
+          <Col
+            span="16"
+            offset="4"
+          >
+          <FormItem
+            label="文章描述"
+            prop="desc"
+          >
+            <Input v-model="formData.desc"></Input>
+          </FormItem>
+          </Col>
 
-                    <Col span="16" offset="4">
-                    <FormItem label="文章首页图" v-if="showUploadImage" prop="headImage">
-                        <upload-image @remove-path="removePath" @add-path="addPath" :src="formData.headImage" v-model="formData.headImage" />
-                    </FormItem>
-                    </Col>
+          <Col
+            span="16"
+            offset="4"
+          >
+          <FormItem
+            label="文章首页图"
+            v-if="showUploadImage"
+            prop="headImage"
+          >
+            <upload-image
+              @remove-path="removePath"
+              @add-path="addPath"
+              :src="formData.headImage"
+              v-model="formData.headImage"
+            />
+          </FormItem>
+          </Col>
 
-                    <Col span="6" offset="4">
-                    <FormItem label="选择分类" prop="category">
-                          <v-select  placeholder="搜索🔍" @search="searchCategory" v-model="formData.category" :options="categories" taggable>
-                             <template slot="no-options">没有搜索到匹配的分类名称</template>
-                        </v-select>
-                    </FormItem>
-                    </Col>
+          <Col
+            span="6"
+            offset="4"
+          >
+          <FormItem
+            label="选择分类"
+            prop="category"
+          >
+            <v-select
+              placeholder="搜索🔍"
+              @search="searchCategory"
+              v-model="formData.category"
+              :options="categories"
+              taggable
+            >
+              <template slot="no-options">没有搜索到匹配的分类名称</template>
+            </v-select>
+          </FormItem>
+          </Col>
 
-                    <Col span="12" offset="4">
-                    <FormItem label="选择标签"  prop="tags">
-                        <v-select placeholder="请输入标签名称搜索🔍" @search="searchTag" multiple v-model="formData.tags" :options="tags" taggable>
-                             <template slot="no-options">没有搜索到匹配的标签名称</template>
-                        </v-select>
-                    </FormItem>
-                    </Col>
+          <Col
+            span="12"
+            offset="4"
+          >
+          <FormItem
+            label="选择标签"
+            prop="tags"
+          >
+            <v-select
+              placeholder="请输入标签名称搜索🔍"
+              @search="searchTag"
+              multiple
+              v-model="formData.tags"
+              :options="tags"
+              taggable
+            >
+              <template slot="no-options">没有搜索到匹配的标签名称</template>
+            </v-select>
+          </FormItem>
+          </Col>
 
-                    <Col span="16" offset="4">
-                    <FormItem label="文章内容" v-if="showUploadImage">
-                        <markdown :options="mdoptions" v-model="formData.content" />
-                    </FormItem>
-                    </Col>
+          <Col
+            span="16"
+            offset="4"
+          >
+          <FormItem
+            label="文章内容"
+            v-if="showUploadImage"
+          >
+            <markdown
+              :options="mdoptions"
+              v-model="formData.content"
+            />
+          </FormItem>
+          </Col>
 
-                    <Col span="16" offset="4">
-                    <FormItem>
-                        <Button type="primary" @click="handleSubmit('formData')">{{ edit ? '更新' : '提交' }}</Button>
-                        <Button @click="handleReset('formData')" style="margin-left: 8px">重置</Button>
-                    </FormItem>
-                    </Col>
+          <Col
+            span="16"
+            offset="4"
+          >
+          <FormItem>
+            <Button
+              type="primary"
+              @click="handleSubmit('formData')"
+            >{{ edit ? '更新' : '提交' }}</Button>
+            <Button
+              @click="handleReset('formData')"
+              style="margin-left: 8px"
+            >重置</Button>
+          </FormItem>
+          </Col>
 
-                </Row>
-            </Form>
-        </Card>
-    </div>
+        </Row>
+      </Form>
+    </Card>
+  </div>
 </template>
 
 <script>
 import Markdown from '_c/markdown'
 import _ from 'lodash'
 import UploadImage from '@/components/upload/UploadImage'
-import { store, categories as searchCategories, tags as searchTag, show as getArticleBy, update } from '@/api/article'
+import {
+  store,
+  categories as searchCategories,
+  tags as searchTag,
+  show as getArticleBy,
+  update
+} from '@/api/article'
 
 export default {
   components: { UploadImage, Markdown },
@@ -87,21 +166,34 @@ export default {
         headImage: ''
       },
       ruleValidate: {
-        title: [
-          { required: true, message: '文章标题必填', trigger: 'blur' }
-        ],
+        title: [{ required: true, message: '文章标题必填', trigger: 'blur' }],
         category: [
           { required: true, message: '文章分类必填', trigger: 'blur' }
         ],
         tags: [
-          { required: true, type: 'array', message: '文章标签必选', trigger: 'blur' }
+          {
+            required: true,
+            type: 'array',
+            message: '文章标签必选',
+            trigger: 'blur'
+          }
         ],
         headImage: [
-          { required: true, type: 'string', message: '文章封面必有', trigger: 'blur' }
+          {
+            required: true,
+            type: 'string',
+            message: '文章封面必有',
+            trigger: 'blur'
+          }
         ],
         desc: [
           { required: true, message: '输入文章的描述信息', trigger: 'blur' },
-          { type: 'string', max: 50, message: '最多不能超过50个字！', trigger: 'blur' }
+          {
+            type: 'string',
+            max: 50,
+            message: '最多不能超过50个字！',
+            trigger: 'blur'
+          }
         ]
       }
     }
@@ -130,7 +222,7 @@ export default {
   },
 
   methods: {
-    async  fetchArticleBy (id) {
+    async fetchArticleBy (id) {
       const { data } = await getArticleBy({ id })
       console.log(data)
 
@@ -180,22 +272,33 @@ export default {
       this.formData.content = value
     },
     handleSubmit (name) {
-      this.$refs[name].validate((valid) => {
+      this.$refs[name].validate(valid => {
         if (valid) {
           if (this.edit) {
             Object.assign(this.formData, {
               id: this.$route.params.id
             })
             update(this.formData)
+              .then(() => {
+                localStorage.markdownContent = ''
+
+                this.$router.push({ name: 'article_list' })
+                this.$Message.success('文章更新成功!')
+              })
+              .catch(err => {
+                this.$Message.error(err.data.error.message)
+              })
           } else {
             store(this.formData)
+              .then(() => {
+                localStorage.markdownContent = ''
+                this.$router.push({ name: 'article_list' })
+                this.$Message.success('文章添加成功!')
+              })
+              .catch(err => {
+                this.$Message.error(err.data.error.message)
+              })
           }
-
-          localStorage.markdownContent = ''
-          setTimeout(() => {
-            this.$router.push({ name: 'article_list' })
-            this.$Message.success('发布成功!')
-          }, 1000)
         } else {
           this.$Message.error('请检查提交数据是否完整！')
         }

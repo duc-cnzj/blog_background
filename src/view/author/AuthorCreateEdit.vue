@@ -89,7 +89,6 @@
   </div>
 </template>
 <script>
-// 'name', 'email', 'avatar', 'mobile', 'bio',
 import { storeUser } from '@/api/user'
 import AvatarModal from '_c/user/AvatarModal'
 import UploadImage from '@/components/upload/UploadImage'
@@ -153,10 +152,6 @@ export default {
         }
       })
     },
-    // async onSubmit () {
-    //   const user = await storeUser(this.author)
-    //   console.log(user)
-    // },
 
     reset () {
       this.author = {}

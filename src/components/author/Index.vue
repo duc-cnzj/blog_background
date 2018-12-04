@@ -145,7 +145,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      // this.edit(params.row.id)
+                      this.edit(params.row.id)
                     }
                   }
                 },
@@ -181,6 +181,10 @@ export default {
   },
 
   methods: {
+    edit (id) {
+      this.$emit('edit-user', id)
+    },
+
     addUser () {
       this.$router.push({ name: 'author_create_edit' })
     },

@@ -15,6 +15,23 @@ export const index = ({ page, pageSize, query = '' }) => {
   })
 }
 
+export const show = (id) => {
+  return axios.request({
+    method: 'get',
+    url: `/admin/users/${id}`
+  })
+}
+
+export const update = ({ id, bio, name, email, avatar }) => {
+  return axios.request({
+    method: 'put',
+    url: `/admin/users/${id}`,
+    data: {
+      id, bio, name, email, avatar
+    }
+  })
+}
+
 export const destory = (id) => {
   return axios.request({
     method: 'delete',
