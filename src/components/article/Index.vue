@@ -345,6 +345,10 @@ export default {
 
 <style lang="scss">
 .preview {
+  ul,ol {
+    list-style-position: inside;
+  }
+
   img {width: 100%}
 }
 </style>
