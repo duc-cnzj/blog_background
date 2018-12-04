@@ -67,17 +67,25 @@
         </Row>
       </i-col>
     </Row>
-
+    <Modal
+        v-if="previewArticle !== null"
+        width="80"
+        v-model="modalVisible"
+        title="title"
+       >
+        <p v-html="previewArticle.content" v-highlight></p>
+    </Modal>
   </div>
 </template>
 <script>
 import _ from 'lodash'
-import { index, deleteArticle, adminElasticSearchArticle } from '@/api/article'
+import { index, deleteArticle, adminElasticSearchArticle, show } from '@/api/article'
 
 export default {
   props: ['all'],
   data () {
     return {
+      modalVisible: false,
       selectedRows: [],
       search: '',
       dataSet: [],
@@ -118,6 +126,32 @@ export default {
             return h('span', {
               domProps: {
                 innerHTML: this.getHighlightRow(params, 'tags', true)
+              }
+            })
+          }
+        },
+        {
+          title: '预览',
+          key: 'preview',
+          width: 150,
+          align: 'center',
+          render: (h, params) => {
+            return h('Button', {
+              props: {
+                type: 'dashed'
+                // size: 'small'
+              },
+              attrs: {
+                shape: 'circle',
+                icon: 'ios-eye-outline'
+              },
+              style: {
+                marginRight: '5px'
+              },
+              on: {
+                click: () => {
+                  this.preview(params.row.id)
+                }
               }
             })
           }
@@ -168,7 +202,8 @@ export default {
             ])
           }
         }
-      ]
+      ],
+      previewArticle: null
     }
   },
 
@@ -177,6 +212,20 @@ export default {
   },
 
   methods: {
+    ok () {
+
+    },
+    cancel () {
+
+    },
+    preview (id) {
+      console.log('preview: ' + id)
+      show({ id }).then(res => {
+        this.modalVisible = true
+        this.previewArticle = res.data
+      })
+    },
+
     getHighlightRow (params, rowName, array = false) {
       if (array) {
         return params.row.highlight !== undefined &&

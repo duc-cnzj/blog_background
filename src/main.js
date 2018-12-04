@@ -8,8 +8,9 @@ import iView from 'iview'
 import i18n from '@/locale'
 import config from '@/config'
 import importDirective from '@/directive'
+import highlight from '@/directive/highlight'
 import 'iview/dist/styles/iview.css'
-import './index.less'
+import './index.less' //
 import '@/assets/icons/iconfont.css'
 import vSelect from 'vue-select'
 
@@ -22,6 +23,9 @@ Vue.component('v-select', vSelect)
 Vue.use(iView, {
   i18n: (key, value) => i18n.t(key, value)
 })
+
+Vue.use(highlight)
+
 Vue.config.productionTip = false
 /**
  * @description 全局注册应用配置

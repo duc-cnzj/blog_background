@@ -131,7 +131,7 @@ export default {
       })
     },
 
-    refreshToken ({ commit }) {
+    refreshToken ({ commit, dispatch }) {
       let token = getRefreshToken()
 
       return new Promise((resolve, reject) => {
