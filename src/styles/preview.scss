@@ -1,0 +1,59 @@
+@font-face {
+  font-family: "duc";
+  src: url("../assets/duc.otf");
+}
+
+.preview {
+    ul,
+    ol {
+      list-style-position: inside;
+    }
+
+    img {
+      width: 100%;
+    }
+
+    // list-style-position: inside;
+    code {
+      font-family: "duc" !important;
+    }
+
+    pre {
+      border-radius: 5px !important;
+      box-shadow: 0px 3px 15px #dbfbe3 !important;
+    }
+
+    blockquote {
+      margin: 20px 0 !important;
+      background-color: #f5f8fc;
+      padding: 1rem;
+      color: #8796a8;
+      border-left: none;
+      p {
+        font-weight: normal !important;
+      }
+    }
+
+    line-height: 2 !important;
+
+    img {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      width: 100%;
+      box-shadow: rgba(255, 204, 0, 0.5) 0 0 11px;
+    }
+
+    font-size: 13px;
+
+    ul {
+      li {
+        list-style-type: disc;
+      }
+    }
+    li {
+      list-style-position: inside;
+      p {
+        display: inline;
+      }
+    }
+}

@@ -72,18 +72,26 @@
       width="80"
       v-model="modalVisible"
     >
-    <div>
-      <div
-        slot="header"
-        style="display: flex;align-items: center;"
-      >
-        <img style="width:30px;height:30px;border-radius:50%;margin-right: 20px;" :src="previewArticle.author.avatar" alt="author image">
-        <span v-text="previewArticle.author.name" style="font-size: 14px;"></span>
-      </div>
+      <div>
+        <div
+          slot="header"
+          style="display: flex;align-items: center;"
+        >
+          <img
+            style="width:30px;height:30px;border-radius:50%;margin-right: 20px;"
+            :src="previewArticle.author.avatar"
+            alt="author image"
+          >
+          <span
+            v-text="previewArticle.author.name"
+            style="font-size: 14px;"
+          ></span>
+        </div>
         <h1 style="text-align:center;margin-bottom: 20px;">{{previewArticle.title}}</h1>
         <Divider dashed />
       </div>
-      <p class="preview"
+      <p
+        class="preview"
         v-html="previewArticle.content"
         v-highlight
       ></p>
@@ -344,11 +352,5 @@ export default {
 </script>
 
 <style lang="scss">
-.preview {
-  ul,ol {
-    list-style-position: inside;
-  }
 
-  img {width: 100%}
-}
 </style>
