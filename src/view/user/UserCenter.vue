@@ -15,17 +15,29 @@
 
       <Col span="17">
       <Card :bordered="false">
-        <Tabs value="name1">
+        <Tabs value="articles"
+          @on-click="onClick"
+          >
           <TabPane
             label="文章"
-            name="name1"
+            name="articles"
           >
-          <my-articles></my-articles>
+            <my-articles></my-articles>
           </TabPane>
           <TabPane
-            label="标签二"
-            name="name2"
-          >标签二的内容</TabPane>
+            label="文章评论列表"
+            name="comments"
+          >
+            <comments-list :comments="comments"
+              @page-change="pageChange"
+              @page-size-change="pageSizeChange"
+              @preview="commentShow"
+              @submit-comment="submitComment"
+              @click-cancel="clickCancel"
+              :previewArticle="showComment"
+              :replies="replies"
+            ></comments-list>
+          </TabPane>
           <TabPane
             label="标签三"
             name="name3"
@@ -39,9 +51,64 @@
 
 <script>
 import MyArticles from './sub/MyArticles'
+import CommentsList from './sub/CommentsList'
+import { index, show, store } from '@/api/comment'
 
 export default {
-  components: { MyArticles }
+  components: { MyArticles, CommentsList },
+  data () {
+    return {
+      comments: null,
+      showComment: null,
+      page: 1,
+      pageSize: 10,
+      replies: []
+    }
+  },
+  methods: {
+    clickCancel () {
+      this.replies = []
+    },
+
+    submitComment ({ body, article_id: articleId, comment_id: commentId }) {
+      store({ body, articleId, commentId }).then(res => {
+        this.replies.push({ id: res.data.id, content: res.data.body })
+      })
+    },
+
+    commentShow (id) {
+      show(id).then(res => {
+        this.showComment = res.data
+        this.replies = res.data.my_comments
+      })
+    },
+
+    pageChange (page) {
+      this.page = page
+      this.commentsClick()
+    },
+
+    pageSizeChange (pageSize) {
+      this.pageSize = pageSize
+      this.commentsClick()
+    },
+
+    onClick (name) {
+      console.log(this[name + `Click`])
+
+      this[name + `Click`] && this[name + `Click`]()
+    },
+
+    commentsClick () {
+      index({ page: this.page, pageSize: this.pageSize }).then(res => {
+        this.comments = res
+      })
+    },
+
+    articlesClick () {
+      console.log('articlesClick')
+    }
+  }
 }
 </script>
 
