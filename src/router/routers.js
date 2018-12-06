@@ -335,6 +335,16 @@ export default [
           title: '发布文章'
         },
         component: () => import('@/view/article/CreateEdit.vue')
+      },
+      {
+        path: 'article_rule',
+        name: 'article_rule',
+        meta: {
+          access: ['super_admin'],
+          icon: 'ios-bookmarks',
+          title: '转换'
+        },
+        component: () => import('@/view/article/Rule.vue')
       }
     ]
   },
