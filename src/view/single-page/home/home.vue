@@ -47,10 +47,10 @@ export default {
   data () {
     return {
       inforCardData: {
-        articleCount: { title: '文章总数', icon: 'md-person-add', count: 0, color: '#2d8cf0' },
+        articleCount: { title: '文章总数', icon: 'ios-list-box-outline', count: 0, color: '#2d8cf0' },
         cacheRate: { title: '文章缓存率%', icon: 'md-locate', count: 0, color: '#19be6b' },
         commentCount: { title: '总评论数', icon: 'md-help-circle', count: 0, color: '#ff9900' },
-        authorCount: { title: '总作者数', icon: 'md-share', count: 0, color: '#ed3f14' }
+        authorCount: { title: '总作者数', icon: 'md-person-add', count: 0, color: '#ed3f14' }
       },
       pieData: [
         { value: 335, name: '直接访问' },
