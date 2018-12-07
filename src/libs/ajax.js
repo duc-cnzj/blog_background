@@ -3,12 +3,20 @@ import router from '../router'
 import store from '../store/index'
 import { Message } from 'iview'
 import _ from 'lodash'
-import {
-  setToken,
-  getToken,
-  getRefreshToken,
-  getRemember
-} from '@/libs/util'
+import { setToken, getToken, getRefreshToken, getRemember } from '@/libs/util'
+
+async function doRequest (error) {
+  const data = await store.dispatch('refreshToken')
+  let { token_type: tokenType, access_token: accessToken } = data
+
+  let token = tokenType + accessToken
+  let configA = error.response.config
+  configA.headers.Authorization = token
+
+  const res = await axios.request(configA)
+
+  return res
+}
 
 // 创建实例时设置配置的默认值
 var instance = axios.create({
@@ -50,7 +58,8 @@ instance.interceptors.response.use(
           console.log('here2')
           if (getRemember() && getRefreshToken()) {
             console.log('here3')
-            store.dispatch('refreshToken')
+
+            return doRequest(error)
           } else {
             console.log('here4')
             Message.error('登陆过期请重新登陆！')
@@ -64,7 +73,7 @@ instance.interceptors.response.use(
         let err = error.response.data.error.errors
 
         let m = _.map(err, 'message')
-        m.map((i) => {
+        m.map(i => {
           Message.error(i)
         })
       } else {

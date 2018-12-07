@@ -116,6 +116,8 @@ export default {
           this.users.meta.total = this.users.meta.total - 1
         })
         .catch(e => {
+          console.log('deleteuser', e)
+
           this.$Modal.remove()
           this.$Message.error(e.data.error.message)
         })
