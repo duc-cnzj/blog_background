@@ -10,10 +10,11 @@ async function doRequest (error) {
   let { token_type: tokenType, access_token: accessToken } = data
 
   let token = tokenType + accessToken
-  let configA = error.response.config
-  configA.headers.Authorization = token
+  let config = error.response.config
+  console.log('response', config)
+  config.headers.Authorization = token
 
-  const res = await axios.request(configA)
+  const res = await axios.request(config)
 
   return res
 }
@@ -29,6 +30,8 @@ var instance = axios.create({
 // 添加请求拦截器
 instance.interceptors.request.use(
   function (config) {
+    console.log('request', config)
+
     if (!config.headers['Authorization']) {
       config.headers['Authorization'] = getToken() || ''
     }

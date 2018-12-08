@@ -275,7 +275,7 @@ export default {
         content: '确认要删除这篇文章吗？',
         loading: true,
         onOk: () => {
-          deleteArticle(1)
+          deleteArticle(id)
             .then(res => {
               this.$Modal.remove()
               this.$Message.success('删除成功')
