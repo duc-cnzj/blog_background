@@ -103,6 +103,7 @@ import _ from 'lodash'
 import {
   index,
   deleteArticle,
+  changedisplay,
   adminElasticSearchArticle,
   show
 } from '@/api/article'
@@ -152,6 +153,25 @@ export default {
             return h('span', {
               domProps: {
                 innerHTML: this.getHighlightRow(params, 'tags', true)
+              }
+            })
+          }
+        },
+        {
+          title: '状态',
+          key: 'display',
+          render: (h, p) => {
+            console.log(p.row.display)
+
+            return h('i-switch', {
+              attrs: {
+                value: p.row.display,
+                size: 'large'
+              },
+              on: {
+                'on-change': () => {
+                  this.changedisplay(p.row.id, p.index)
+                }
               }
             })
           }
@@ -238,6 +258,15 @@ export default {
   },
 
   methods: {
+    changedisplay (id, index) {
+      changedisplay(id).then(() => {
+        this.$Message.success('操作成功')
+      }).catch(() => {
+        this.$Message.error('操作失败')
+        this.fetchArticles()
+      })
+    },
+
     title () {
       return this.previewArticle.author.name + this.previewArticle.title
     },
@@ -352,5 +381,4 @@ export default {
 </script>
 
 <style lang="scss">
-
 </style>

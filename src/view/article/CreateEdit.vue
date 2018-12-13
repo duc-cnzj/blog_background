@@ -21,23 +21,13 @@
             <Input v-model="formData.title"></Input>
           </FormItem>
 
-          </Col>
-          <Col
-            span="16"
-            offset="4"
-          >
           <FormItem
             label="文章描述"
             prop="desc"
           >
             <Input v-model="formData.desc"></Input>
           </FormItem>
-          </Col>
 
-          <Col
-            span="16"
-            offset="4"
-          >
           <FormItem
             label="文章首页图"
             v-if="showUploadImage"
@@ -50,12 +40,7 @@
               v-model="formData.headImage"
             />
           </FormItem>
-          </Col>
 
-          <Col
-            span="6"
-            offset="4"
-          >
           <FormItem
             label="选择分类"
             prop="category"
@@ -70,12 +55,7 @@
               <template slot="no-options">没有搜索到匹配的分类名称</template>
             </v-select>
           </FormItem>
-          </Col>
 
-          <Col
-            span="12"
-            offset="4"
-          >
           <FormItem
             label="选择标签"
             prop="tags"
@@ -91,12 +71,7 @@
               <template slot="no-options">没有搜索到匹配的标签名称</template>
             </v-select>
           </FormItem>
-          </Col>
 
-          <Col
-            span="16"
-            offset="4"
-          >
           <FormItem
             label="文章内容"
             v-if="showUploadImage"
@@ -106,12 +81,14 @@
               v-model="formData.content"
             />
           </FormItem>
-          </Col>
 
-          <Col
-            span="16"
-            offset="4"
-          >
+          <FormItem label="显示或者隐藏">
+            <i-switch size="large" v-model="formData.display">
+              <span slot="open">显示</span>
+              <span slot="close">隐藏</span>
+            </i-switch>
+          </FormItem>
+
           <FormItem>
             <Button
               type="primary"
@@ -158,6 +135,7 @@ export default {
         }
       },
       formData: {
+        display: true,
         category: null,
         content: '',
         title: '',
@@ -227,12 +205,13 @@ export default {
       console.log(data)
 
       this.fetehed = true
-      this.formData.category = data.category.name
       this.formData.content = data.content_md
       this.formData.title = data.title
       this.formData.desc = data.desc
+      this.formData.display = data.display
       this.formData.headImage = data.headImage
       this.formData.tags = _.map(data.tags, 'name')
+      this.formData.category = _map(data.category, 'name')
     },
 
     searchTag (search, loading) {

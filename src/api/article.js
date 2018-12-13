@@ -28,7 +28,8 @@ export const store = payload => {
       title: payload.title,
       head_image: payload.headImage,
       category: payload.category,
-      tags: payload.tags
+      tags: payload.tags,
+      display: payload.display
     },
     method: 'post'
   })
@@ -48,7 +49,8 @@ export const update = ({
   title,
   headImage,
   category,
-  tags
+  tags,
+  display
 }) => {
   console.log('here')
 
@@ -60,7 +62,8 @@ export const update = ({
       title: title,
       head_image: headImage,
       category: category,
-      tags: tags
+      tags: tags,
+      display: display
     },
     method: 'put'
   })
@@ -73,6 +76,13 @@ export const categories = ({ query }) => {
       q: query
     },
     method: 'get'
+  })
+}
+
+export const changedisplay = id => {
+  return axios.request({
+    url: '/admin/article_change_display/' + id,
+    method: 'put'
   })
 }
 
