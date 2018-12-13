@@ -158,7 +158,7 @@ export default {
           }
         },
         {
-          title: '状态',
+          title: '是否隐藏',
           key: 'display',
           render: (h, p) => {
             console.log(p.row.display)
