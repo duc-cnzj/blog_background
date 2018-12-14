@@ -105,6 +105,8 @@ import {
   deleteArticle,
   changedisplay,
   adminElasticSearchArticle,
+  setTop,
+  cancelSetTop,
   show
 } from '@/api/article'
 
@@ -171,6 +173,25 @@ export default {
               on: {
                 'on-change': () => {
                   this.changedisplay(p.row.id, p.index)
+                }
+              }
+            })
+          }
+        },
+        {
+          title: '置顶',
+          key: 'display',
+          render: (h, p) => {
+            console.log(p.row.is_top)
+
+            return h('i-switch', {
+              attrs: {
+                value: p.row.is_top,
+                size: 'large'
+              },
+              on: {
+                'on-change': (status) => {
+                  this.setTop(p.row.id, p.index, status)
                 }
               }
             })
@@ -258,6 +279,24 @@ export default {
   },
 
   methods: {
+    setTop (id, index, status) {
+      if (status) {
+        setTop(id).then(() => {
+          this.$Message.success('操作成功')
+        }).catch(() => {
+          this.$Message.error('操作失败')
+          this.fetchArticles()
+        })
+      } else {
+        cancelSetTop(id).then(() => {
+          this.$Message.success('操作成功')
+        }).catch(() => {
+          this.$Message.error('操作失败')
+          this.fetchArticles()
+        })
+      }
+    },
+
     changedisplay (id, index) {
       changedisplay(id).then(() => {
         this.$Message.success('操作成功')

@@ -86,6 +86,20 @@ export const changedisplay = id => {
   })
 }
 
+export const setTop = id => {
+  return axios.request({
+    url: '/admin/article_set_top/' + id,
+    method: 'put'
+  })
+}
+
+export const cancelSetTop = id => {
+  return axios.request({
+    url: '/admin/article_cancel_set_top/' + id,
+    method: 'put'
+  })
+}
+
 export const tags = ({ query }) => {
   return axios.request({
     url: '/admin/tags',
