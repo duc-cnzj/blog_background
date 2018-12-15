@@ -17,17 +17,18 @@
         :headers='headers'
         :show-upload-list="false"
         :on-success="handleSuccess"
+        :on-error="handleError"
         :format="['jpg','jpeg','png']"
-        :max-size="2048"
+        :max-size="10240"
         :on-format-error="handleFormatError"
         :on-exceeded-size="handleMaxSize"
         :default-file-list="defaultList"
         name='image'
         type="drag"
         :action="imageUplodpath"
-        style="display: inline-block;width:58px;"
+        style="display: inline-block;width:100px;"
         >
-        <div style="width: 58px;height:58px;line-height: 58px;">
+        <div style="width: 100px;height:100px;line-height: 100px;">
           <Icon type="ios-camera" size="20"></Icon>
         </div>
       </Upload>
@@ -39,6 +40,8 @@
 </template>
 <script>
 import { getToken } from '@/libs/util'
+import { mapActions } from 'vuex'
+
 export default {
   props: ['src'],
 
@@ -77,6 +80,16 @@ export default {
   },
 
   methods: {
+    ...mapActions(['refreshToken']),
+    handleError (error, file, fileList) {
+      if (error.status === 401) {
+        this.refreshToken().then(data => {
+          this.headers.Authorization = data.token_type + data.access_token
+          this.$Message.warning('请在上传一次😅')
+        })
+      }
+    },
+
     handleView (name) {
       this.imgName = name
       this.visible = true
@@ -105,7 +118,7 @@ export default {
     handleMaxSize (file) {
       this.$Notice.warning({
         title: '图片太大了',
-        desc: '最大不能超过2M.'
+        desc: '最大不能超过10M.'
       })
     }
   }
@@ -115,10 +128,10 @@ export default {
 <style>
 .demo-upload-list {
   display: inline-block;
-  width: 60px;
-  height: 60px;
+  width: 100px;
+  height: 100px;
   text-align: center;
-  line-height: 60px;
+  line-height: 100px;
   border: 1px solid transparent;
   border-radius: 4px;
   overflow: hidden;

@@ -2,18 +2,15 @@
   <div>
     <Card :bordered="false">
       <p slot="title">添加文章</p>
-      <Form
-        ref="formData"
-        :model="formData"
-        :rules="ruleValidate"
-        label-position="right"
-        :label-width="100"
-      >
-        <Row>
-          <Col
-            span="12"
-            offset="4"
-          >
+      <Row>
+        <Col span="20">
+        <Form
+          ref="formData"
+          :model="formData"
+          :rules="ruleValidate"
+          label-position="right"
+          :label-width="100"
+        >
           <FormItem
             label="文章标题"
             prop="title"
@@ -46,6 +43,7 @@
             prop="category"
           >
             <v-select
+              key="category"
               placeholder="搜索🔍"
               @search="searchCategory"
               v-model="formData.category"
@@ -61,6 +59,7 @@
             prop="tags"
           >
             <v-select
+              key="tag"
               placeholder="请输入标签名称搜索🔍"
               @search="searchTag"
               multiple
@@ -83,7 +82,10 @@
           </FormItem>
 
           <FormItem label="显示或者隐藏">
-            <i-switch size="large" v-model="formData.display">
+            <i-switch
+              size="large"
+              v-model="formData.display"
+            >
               <span slot="open">显示</span>
               <span slot="close">隐藏</span>
             </i-switch>
@@ -99,10 +101,10 @@
               style="margin-left: 8px"
             >重置</Button>
           </FormItem>
-          </Col>
+        </Form>
+        </Col>
 
-        </Row>
-      </Form>
+      </Row>
     </Card>
   </div>
 </template>
@@ -211,7 +213,10 @@ export default {
       this.formData.display = data.display
       this.formData.headImage = data.headImage
       this.formData.tags = _.map(data.tags, 'name')
-      this.formData.category = _map(data.category, 'name')
+      this.formData.category = data.category.name
+
+      this.categories = [data.category.name]
+      this.tags = _.map(data.tags, 'name')
     },
 
     searchTag (search, loading) {
