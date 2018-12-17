@@ -14,7 +14,7 @@ COPY package*.json ./
 COPY . .
 
 RUN yarn install  \
-    && yarn run build --mode localdevelopment
+    && yarn run build:local
 
 # production stage
 FROM nginx as production-stage
