@@ -71,6 +71,8 @@ instance.interceptors.response.use(
               name: 'login'
             })
           }
+        } else {
+          return Promise.reject(error)
         }
       } else if (error.response.status === 422) {
         let err = error.response.data.error.errors
