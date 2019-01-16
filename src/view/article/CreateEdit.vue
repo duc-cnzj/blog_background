@@ -228,8 +228,9 @@ export default {
       searchTag({
         query: search
       }).then(({ data }) => {
-        const tags = _.map(data.data, 'name')
+        const tags = _.map(data, 'name')
         vm.tags = tags
+
         loading(false)
       })
     }, 350),
