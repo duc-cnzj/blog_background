@@ -68,7 +68,7 @@
           </Panel>
         </Collapse>
         <Table border :data="dataSet" :columns="columns" style="margin-top:20px"></Table>
-        <Modal v-model="showModal" title="response">
+        <Modal v-model="showModal" width="900" :expand-depth=50 title="response">
           <json-viewer :value="response" copyable boxed sort></json-viewer>
         </Modal>
         <Page
