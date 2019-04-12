@@ -77,6 +77,7 @@
         <Page
           v-if="Object.keys(data).length"
           :total="data.meta.total"
+          :page-size="Number(data.meta.per_page)"
           style="margin-top:20px"
           @on-change="onChange"
           @on-page-size-change="onPageSizeChange"
