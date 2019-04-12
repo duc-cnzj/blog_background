@@ -8,6 +8,7 @@ const historyEnum = [
   'visit_time_before',
   'user_id',
   'user_type',
+  'url',
   'only_see',
   'page',
   'page_size'

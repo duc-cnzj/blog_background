@@ -25,7 +25,6 @@
                       <Select v-model="query.method" placeholder="请选择" :clearable="true">
                         <Option value="GET">GET</Option>
                         <Option value="POST">POST</Option>
-                        <Option value="OPTIONS">OPTIONS</Option>
                         <Option value="PUT">PUT</Option>
                         <Option value="PATCH">PATCH</Option>
                         <Option value="DELETE">DELETE</Option>
@@ -33,6 +32,9 @@
                     </Form-item>
                     <Form-item label="ip">
                       <Input v-model="query.ip" placeholder="请输入查询的 ip"></Input>
+                    </Form-item>
+                    <Form-item label="url">
+                      <Input v-model="query.url" placeholder="请输入查询的 url"></Input>
                     </Form-item>
                     <Form-item label="status_code">
                       <Input v-model="query.status_code" placeholder="请输入查询的 status_code"></Input>
@@ -182,6 +184,7 @@ export default {
         method: null,
         status_code: null,
         address: null,
+        url: null,
         response: null,
         visit_time_after: null,
         visit_time_before: null,
@@ -236,6 +239,7 @@ export default {
         method: null,
         status_code: null,
         address: null,
+        url: null,
         response: null,
         visit_time_after: null,
         visit_time_before: null,
