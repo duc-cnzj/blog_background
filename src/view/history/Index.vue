@@ -12,7 +12,7 @@
                   <Col span="12">
                     <Form-item label="日期范围">
                       <Date-picker
-                        v-model='query.date'
+                        v-model="query.date"
                         type="daterange"
                         placement="right-start"
                         placeholder="选择日期"
@@ -71,7 +71,7 @@
           </Panel>
         </Collapse>
         <Table border :data="dataSet" :columns="columns" style="margin-top:20px"></Table>
-        <Modal v-model="showModal" width="900" :expand-depth=50 title="response">
+        <Modal v-model="showModal" width="900" :expand-depth="50" title="response">
           <json-viewer :value="response" copyable boxed sort></json-viewer>
         </Modal>
         <Page
@@ -106,9 +106,9 @@ export default {
           width: 60
         },
         {
-          title: 'ip',
-          key: 'ip',
-          width: 140
+          title: 'url',
+          key: 'url',
+          width: 300
         },
         {
           title: 'method',
@@ -116,14 +116,9 @@ export default {
           width: 120
         },
         {
-          title: 'url',
-          key: 'url',
-          width: 300
-        },
-        {
-          title: '访问时间',
-          key: 'visited_at',
-          width: 200
+          title: 'ip',
+          key: 'ip',
+          width: 140
         },
         {
           title: '状态码',
@@ -134,6 +129,11 @@ export default {
           title: '地址',
           key: 'address',
           width: 120
+        },
+        {
+          title: '访问时间',
+          key: 'visited_at',
+          width: 200
         },
         {
           title: '访客名称',
@@ -226,7 +226,11 @@ export default {
 
     async previewResponse (id) {
       const showData = await show(id)
-      this.response = JSON.parse(showData.data.response)
+      try {
+        this.response = JSON.parse(showData.data.response)
+      } catch (e) {
+        this.response = showData.data.response
+      }
       this.showModal = true
     },
 
