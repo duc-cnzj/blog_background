@@ -104,7 +104,7 @@ export default {
         {
           title: 'ip',
           key: 'ip',
-          width: 120
+          width: 140
         },
         {
           title: 'method',
@@ -114,17 +114,17 @@ export default {
         {
           title: 'url',
           key: 'url',
-          width: 120
+          width: 300
         },
         {
           title: '访问时间',
           key: 'visited_at',
-          width: 120
+          width: 200
         },
         {
           title: '状态码',
           key: 'status_code',
-          width: 120
+          width: 100
         },
         {
           title: '地址',
