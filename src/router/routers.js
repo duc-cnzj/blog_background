@@ -348,6 +348,27 @@ export default [
       }
     ]
   },
+  {
+    path: '/history',
+    name: 'history',
+    meta: {
+      icon: 'md-menu',
+      title: '访问历史'
+    },
+    component: Main,
+    children: [
+      {
+        path: '/history_index',
+        name: 'history_index',
+        meta: {
+          access: ['super_admin'],
+          icon: 'ios-world',
+          title: '访问历史'
+        },
+        component: () => import('@/view/history/Index.vue')
+      },
+    ]
+  },
 
   {
     path: '/argu',

@@ -1911,6 +1911,15 @@ clipboard@^2.0.0:
     select "^1.1.2"
     tiny-emitter "^2.0.0"
 
+clipboard@^2.0.4:
+  version "2.0.4"
+  resolved "http://registry.npm.taobao.org/clipboard/download/clipboard-2.0.4.tgz?cache=0&other_urls=http%3A%2F%2Fregistry.npm.taobao.org%2Fclipboard%2Fdownload%2Fclipboard-2.0.4.tgz#836dafd66cf0fea5d71ce5d5b0bf6e958009112d"
+  integrity sha1-g22v1mzw/qXXHOXVsL9ulYAJES0=
+  dependencies:
+    good-listener "^1.2.2"
+    select "^1.1.2"
+    tiny-emitter "^2.0.0"
+
 clipboardy@^1.2.3:
   version "1.2.3"
   resolved "http://registry.npm.taobao.org/clipboardy/download/clipboardy-1.2.3.tgz#0526361bf78724c1f20be248d428e365433c07ef"
@@ -7883,6 +7892,14 @@ vue-i18n@^7.8.0:
   version "7.8.1"
   resolved "http://registry.npm.taobao.org/vue-i18n/download/vue-i18n-7.8.1.tgz#2ce4b6efde679a1e05ddb5d907bfc1bc218803b2"
 
+vue-json-viewer@^2.1.4:
+  version "2.1.4"
+  resolved "http://registry.npm.taobao.org/vue-json-viewer/download/vue-json-viewer-2.1.4.tgz#0b70bba17b62ae6f5339d1f9555f72252f00993d"
+  integrity sha1-C3C7oXtirm9TOdH5VV9yJS8AmT0=
+  dependencies:
+    clipboard "^2.0.4"
+    vue "^2.6.9"
+
 vue-loader@^15.4.2:
   version "15.4.2"
   resolved "http://registry.npm.taobao.org/vue-loader/download/vue-loader-15.4.2.tgz#812bb26e447dd3b84c485eb634190d914ce125e2"
@@ -7929,6 +7946,11 @@ vue-template-es2015-compiler@^1.6.0:
 vue@^2.5.10, vue@^2.5.17:
   version "2.5.17"
   resolved "http://registry.npm.taobao.org/vue/download/vue-2.5.17.tgz#0f8789ad718be68ca1872629832ed533589c6ada"
+
+vue@^2.6.9:
+  version "2.6.10"
+  resolved "http://registry.npm.taobao.org/vue/download/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
+  integrity sha1-pysaQqTYKnIepDjRtr9V5mGVxjc=
 
 vuedraggable@^2.16.0:
   version "2.16.0"

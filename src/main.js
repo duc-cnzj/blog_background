@@ -14,6 +14,8 @@ import './index.less' //
 import '@/assets/icons/iconfont.css'
 import '@/styles/index.scss'
 import vSelect from 'vue-select'
+import JsonViewer from 'vue-json-viewer'
+import 'vue-json-viewer/style.css'
 
 Vue.component('v-select', vSelect)
 
@@ -25,6 +27,7 @@ Vue.use(iView, {
   i18n: (key, value) => i18n.t(key, value)
 })
 
+Vue.use(JsonViewer)
 Vue.use(highlight)
 
 Vue.config.productionTip = false
