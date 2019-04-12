@@ -12,10 +12,10 @@
                   <Col span="12">
                     <Form-item label="日期范围">
                       <Date-picker
+                        v-model='query.date'
                         type="daterange"
                         placement="right-start"
                         placeholder="选择日期"
-                        style="width: 200px"
                         @on-change="dateChange"
                       ></Date-picker>
                     </Form-item>
@@ -176,6 +176,7 @@ export default {
         }
       ],
       query: {
+        date: [],
         ip: null,
         method: null,
         status_code: null,
