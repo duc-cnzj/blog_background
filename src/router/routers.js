@@ -352,7 +352,7 @@ export default [
     path: '/history',
     name: 'history',
     meta: {
-      icon: 'md-menu',
+      icon: 'ios-bookmarks',
       title: '访问历史'
     },
     component: Main,
@@ -362,10 +362,20 @@ export default [
         name: 'history_index',
         meta: {
           access: ['super_admin'],
-          icon: 'ios-world',
+          icon: 'ios-bookmarks',
           title: '访问历史'
         },
         component: () => import('@/view/history/Index.vue')
+      },
+      {
+        path: '/history_white_list',
+        name: 'history_white_list',
+        meta: {
+          access: ['super_admin'],
+          icon: 'ios-bookmarks',
+          title: '白名单'
+        },
+        component: () => import('@/view/history/WhiteList.vue')
       },
     ]
   },
