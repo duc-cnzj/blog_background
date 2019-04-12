@@ -16,6 +16,7 @@
                         type="daterange"
                         placement="right-start"
                         placeholder="选择日期"
+                        style="width: 200px"
                         @on-change="dateChange"
                       ></Date-picker>
                     </Form-item>
