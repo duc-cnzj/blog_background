@@ -191,7 +191,7 @@ export default {
         visit_time_before: null,
         user_id: null,
         user_type: null,
-        only_see: null,
+        only_see: 'frontend',
         page: 1,
         page_size: 10
       }
@@ -250,7 +250,7 @@ export default {
         visit_time_before: null,
         user_id: null,
         user_type: null,
-        only_see: null,
+        only_see: 'frontend',
         page: 1,
         page_size: 10
       }
