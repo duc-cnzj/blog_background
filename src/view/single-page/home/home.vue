@@ -1,29 +1,57 @@
 <template>
   <div>
     <Row :gutter="20">
-      <i-col span="6" v-for="(infor, i) in inforCardData" :key="`infor-${i}`" style="height: 120px;">
+      <i-col
+        span="6"
+        v-for="(infor, i) in inforCardData"
+        :key="`infor-${i}`"
+        style="height: 120px;"
+      >
         <infor-card shadow :color="infor.color" :icon="infor.icon" :icon-size="36">
           <count-to :end="infor.count" count-class="count-style"/>
           <p>{{ infor.title }}</p>
         </infor-card>
       </i-col>
     </Row>
-    <Row :gutter="20" style="margin-top: 20px;">
-      <i-col span="8">
-        <Card shadow>
-          <chart-pie style="height: 300px;" :value="pieData" text="用户访问来源"></chart-pie>
+
+    <Row style="margin-top: 30px">
+      <Col>
+        <Card>
+          <div class="chart-select">
+            <RadioGroup v-model="query.unit" @on-change='queryChange'>
+              <Radio label="week">按周统计</Radio>
+              <Radio label="day">按天统计</Radio>
+            </RadioGroup>
+
+            <Select v-show="query.unit == 'week'" v-model="query.sub_week" style="width:200px" @on-change="queryChange">
+                <Option value="0">本周</Option>
+                <Option value="1">上一周</Option>
+                <Option value="2">上上周</Option>
+                <Option value="3">上三周</Option>
+            </Select>
+
+            <Select v-show="query.unit == 'day'" v-model="query.section" style="width:200px" @on-change="queryChange">
+                <Option value="3">分三个区间</Option>
+                <Option value="4">分四个区间</Option>
+                <Option value="6">分六个区间</Option>
+                <Option value="8">分八个区间</Option>
+            </Select>
+          </div>
+          <history-line/>
         </Card>
-      </i-col>
-      <i-col span="16">
-        <Card shadow>
-          <chart-bar style="height: 300px;" :value="barData" text="每周用户活跃量"/>
-        </Card>
-      </i-col>
+      </Col>
     </Row>
-    <Row style="margin-top: 20px;">
-      <Card shadow>
-        <example style="height: 310px;"/>
-      </Card>
+    <Row>
+      <Col style="padding-top: 30px" span="10">
+        <Card>
+          <history-pie/>
+        </Card>
+      </Col>
+      <Col style="padding-top: 30px" span="12" offset="1">
+        <Card>
+          <Table border :columns="tableColumns" :data="chartData"></Table>
+        </Card>
+      </Col>
     </Row>
   </div>
 </template>
@@ -32,8 +60,10 @@
 import InforCard from '_c/info-card'
 import CountTo from '_c/count-to'
 import { ChartPie, ChartBar } from '_c/charts'
-import Example from './example.vue'
+import HistoryLine from './HistoryLine.vue'
+import HistoryPie from './HistoryPie.vue'
 import { index } from '@/api/dashboard'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'home',
@@ -42,35 +72,54 @@ export default {
     CountTo,
     ChartPie,
     ChartBar,
-    Example
+    HistoryLine,
+    HistoryPie
   },
   data () {
     return {
+      query: {
+        unit: 'day',
+        sub_week: 1,
+        section: 6
+      },
+      tableColumns: [
+        {
+          title: 'ip',
+          key: 'ip',
+          width: 130
+        },
+        {
+          title: '地址',
+          key: 'address',
+          width: 120
+        },
+        {
+          title: '数量',
+          key: 'count'
+        },
+        {
+          title: 'url',
+          key: 'url',
+          width: 200
+        }
+      ],
       inforCardData: {
         articleCount: { title: '文章总数', icon: 'ios-list-box-outline', count: 0, color: '#2d8cf0' },
         cacheRate: { title: '文章缓存率%', icon: 'md-locate', count: 0, color: '#19be6b' },
         commentCount: { title: '总评论数', icon: 'md-help-circle', count: 0, color: '#ff9900' },
         authorCount: { title: '总作者数', icon: 'md-person-add', count: 0, color: '#ed3f14' }
-      },
-      pieData: [
-        { value: 335, name: '直接访问' },
-        { value: 310, name: '邮件营销' },
-        { value: 234, name: '联盟广告' },
-        { value: 135, name: '视频广告' },
-        { value: 1548, name: '搜索引擎' }
-      ],
-      barData: {
-        Mon: 13253,
-        Tue: 34235,
-        Wed: 26321,
-        Thu: 12340,
-        Fri: 24643,
-        Sat: 1322,
-        Sun: 1324
       }
     }
   },
+
+  computed: {
+    ...mapState('history', {
+      chartData: state => state.data.total_visits
+    })
+  },
+
   created () {
+    this.getHistoryData(this.query)
     index().then(({ data }) => {
       this.inforCardData.articleCount.count = data.article_count
       this.inforCardData.cacheRate.count = data.cache_rate
@@ -78,14 +127,25 @@ export default {
       this.inforCardData.authorCount.count = data.author_count
     })
   },
-  mounted () {
-    //
+  methods: {
+    queryChange () {
+      this.getHistoryData(this.query)
+    },
+
+    ...mapActions('history', {
+      getHistoryData: 'getHistoryData'
+    })
   }
 }
 </script>
 
 <style lang="less">
-.count-style{
+.chart-select {
+  // Button {
+  //   margin-left: 6px;
+  // }
+}
+.count-style {
   font-size: 50px;
 }
 </style>

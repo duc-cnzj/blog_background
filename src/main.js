@@ -16,6 +16,9 @@ import '@/styles/index.scss'
 import vSelect from 'vue-select'
 import JsonViewer from 'vue-json-viewer'
 import 'vue-json-viewer/style.css'
+import VCharts from 'v-charts'
+
+Vue.use(VCharts)
 
 Vue.component('v-select', vSelect)
 
