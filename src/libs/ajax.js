@@ -11,12 +11,27 @@ async function doRequest (error) {
 
   let token = tokenType + accessToken
   let config = error.response.config
-  console.log('response', config)
   config.headers.Authorization = token
 
   const res = await axios.request(config)
 
-  return res
+  return res.data
+}
+
+function handle401 (error) {
+  if (router.currentRoute.name !== 'login') {
+    if (getRemember() && getRefreshToken()) {
+      return doRequest(error)
+    } else {
+      Message.error('登陆过期请重新登陆！')
+      setToken('')
+      router.push({
+        name: 'login'
+      })
+    }
+  } else {
+    return Promise.reject(error)
+  }
 }
 
 // 创建实例时设置配置的默认值
@@ -24,14 +39,9 @@ var instance = axios.create({
   baseURL: process.env.VUE_APP_URL
 })
 
-// 在实例已创建后修改默认值
-// instance.defaults.headers.common['Authorization'] = getToken() || ''
-
 // 添加请求拦截器
 instance.interceptors.request.use(
   function (config) {
-    console.log('request', config)
-
     if (!config.headers['Authorization']) {
       config.headers['Authorization'] = getToken() || ''
     }
@@ -51,29 +61,9 @@ instance.interceptors.response.use(
     return response.data
   },
   function (error) {
-    console.log(error)
-
     if (error.response) {
       if (error.response.status === 401) {
-        console.log('here')
-
-        if (router.currentRoute.name !== 'login') {
-          console.log('here2')
-          if (getRemember() && getRefreshToken()) {
-            console.log('here3')
-
-            return doRequest(error)
-          } else {
-            console.log('here4')
-            Message.error('登陆过期请重新登陆！')
-            setToken('')
-            router.push({
-              name: 'login'
-            })
-          }
-        } else {
-          return Promise.reject(error)
-        }
+        return handle401(error)
       } else if (error.response.status === 422) {
         let err = error.response.data.error.errors
 

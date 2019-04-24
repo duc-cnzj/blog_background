@@ -9,13 +9,10 @@ export default {
   },
   mutations: {
     [SET_HISTORY_DATA] (state, data) {
-      console.log(data)
       state.data = data
     },
 
     [SET_HISTORY_COLUMNS] (state, columns) {
-      console.log(columns)
-
       state.columns = columns
     }
 
@@ -27,7 +24,7 @@ export default {
         try {
           historyData(obj)
             .then(({ data }) => {
-              console.log(data)
+              console.log('data', data)
               commit(SET_HISTORY_COLUMNS, data.times)
               commit(SET_HISTORY_DATA, data)
 

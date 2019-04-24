@@ -91,8 +91,6 @@ export default {
 
   methods: {
     onUpload () {
-      console.log(this.$refs.uploadBtn)
-
       this.$refs.uploadBtn.click()
     },
 
@@ -142,8 +140,6 @@ export default {
 
     okHandel () {
       this.$refs.cropper.getCropBlob(data => {
-        console.log('ehere')
-
         this.$emit('avatar-onsave', data)
       })
 

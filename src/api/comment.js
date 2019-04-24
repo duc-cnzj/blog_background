@@ -11,7 +11,7 @@ export const index = ({ page, pageSize }) => {
   })
 }
 export const store = ({ body, articleId, commentId }) => {
-  console.log('leave comment')
+  // console.log('leave comment')
 
   return axios.request({
     method: 'post',
@@ -23,7 +23,7 @@ export const store = ({ body, articleId, commentId }) => {
   })
 }
 export const show = id => {
-  console.log('show comment')
+  // console.log('show comment')
 
   return axios.request({
     method: 'get',

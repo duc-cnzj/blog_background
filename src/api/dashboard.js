@@ -7,7 +7,7 @@ export const index = () => {
 }
 
 export const historyData = (obj) => {
-  console.log(obj)
+  // console.log(obj)
   return axios.request({
     url: '/admin/history_data',
     params: obj

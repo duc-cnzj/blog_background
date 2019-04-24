@@ -1,8 +1,8 @@
 import axios from '@/libs/api.request'
 
 export const index = ({ page, pageSize, query = '' }) => {
-  console.log('da')
-  console.log(pageSize)
+  // console.log('da')
+  // console.log(pageSize)
 
   return axios.request({
     method: 'get',

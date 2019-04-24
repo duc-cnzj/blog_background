@@ -31,10 +31,11 @@
             </Select>
 
             <Select v-show="query.unit == 'day'" v-model="query.section" style="width:200px" @on-change="queryChange">
-                <Option value="3">分三个区间</Option>
-                <Option value="4">分四个区间</Option>
-                <Option value="6">分六个区间</Option>
-                <Option value="8">分八个区间</Option>
+                <Option value="3">分3个区间</Option>
+                <Option value="4">分4个区间</Option>
+                <Option value="6">分6个区间</Option>
+                <Option value="8">分8个区间</Option>
+                <Option value="12">分12个区间</Option>
             </Select>
           </div>
           <history-line/>

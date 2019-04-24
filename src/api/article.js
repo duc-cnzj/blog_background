@@ -52,7 +52,7 @@ export const update = ({
   tags,
   display
 }) => {
-  console.log('here')
+  // console.log('here')
 
   return axios.request({
     url: `/admin/articles/${id}`,

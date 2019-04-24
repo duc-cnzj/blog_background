@@ -163,8 +163,6 @@ export default {
           title: '是否隐藏',
           key: 'display',
           render: (h, p) => {
-            console.log(p.row.display)
-
             return h('i-switch', {
               attrs: {
                 value: p.row.display,
@@ -182,8 +180,6 @@ export default {
           title: '置顶',
           key: 'display',
           render: (h, p) => {
-            console.log(p.row.is_top)
-
             return h('i-switch', {
               attrs: {
                 value: p.row.is_top,
@@ -312,7 +308,6 @@ export default {
     ok () {},
     cancel () {},
     preview (id) {
-      console.log('preview: ' + id)
       show({ id }).then(res => {
         this.modalVisible = true
         this.previewArticle = res.data
@@ -407,8 +402,6 @@ export default {
         pageSize: this.pageSize,
         query: this.search
       })
-      console.log(data)
-
       this.dataSet = data
     },
 
