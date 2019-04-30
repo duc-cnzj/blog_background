@@ -147,12 +147,41 @@ export default {
               }
             })
           }
+        },
+        {
+          title: 'Action',
+          key: 'action',
+          width: 150,
+          align: 'center',
+          render: (h, params) => {
+            return h('div', [
+              h(
+                'Button',
+                {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      this.delete(params.row.id, params.index)
+                    }
+                  }
+                },
+                '删除'
+              )
+            ])
+          }
         }
       ]
     }
   },
 
   methods: {
+    delete (id, index) {
+      this.$emit('delete-comment', id)
+    },
+
     cancel () {
       this.modalVisible = false
       this.formItem.body = ''

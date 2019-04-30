@@ -22,11 +22,19 @@ export const store = ({ body, articleId, commentId }) => {
     }
   })
 }
+
 export const show = id => {
   // console.log('show comment')
 
   return axios.request({
     method: 'get',
+    url: `/admin/comments/${id}`
+  })
+}
+
+export const destroy = id => {
+  return axios.request({
+    method: 'delete',
     url: `/admin/comments/${id}`
   })
 }

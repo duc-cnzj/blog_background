@@ -379,6 +379,26 @@ export default [
       },
     ]
   },
+  {
+    path: '/socialite',
+    name: 'socialite',
+    meta: {
+      icon: 'ios-bookmarks',
+      title: '第三方用户'
+    },
+    component: Main,
+    children: [
+      {
+        path: '/socialite_index',
+        name: 'socialite_index',
+        meta: {
+          icon: 'ios-bookmarks',
+          title: '第三方用户'
+        },
+        component: () => import('@/view/socialite/Index.vue')
+      }
+    ]
+  },
 
   {
     path: '/argu',

@@ -34,6 +34,7 @@
               @preview="commentShow"
               @submit-comment="submitComment"
               @click-cancel="clickCancel"
+              @delete-comment="deleteComment"
               :previewArticle="showComment"
               :replies="replies"
             ></comments-list>
@@ -52,7 +53,7 @@
 <script>
 import MyArticles from './sub/MyArticles'
 import CommentsList from './sub/CommentsList'
-import { index, show, store } from '@/api/comment'
+import { index, show, store, destroy } from '@/api/comment'
 
 export default {
   components: { MyArticles, CommentsList },
@@ -66,6 +67,26 @@ export default {
     }
   },
   methods: {
+    deleteComment (id) {
+      this.$Modal.confirm({
+        title: `删除`,
+        content: '确认要删除这评论吗？',
+        loading: true,
+        onOk: () => {
+          destroy(id)
+            .then(res => {
+              this.$Modal.remove()
+              this.$Message.success('删除成功')
+              this.commentsClick()
+            })
+            .catch(e => {
+              this.$Modal.remove()
+              this.$Message.error(e.data.error.message)
+            })
+        }
+      })
+    },
+
     clickCancel () {
       this.replies = []
     },

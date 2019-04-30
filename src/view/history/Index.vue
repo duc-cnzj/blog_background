@@ -193,7 +193,7 @@ export default {
         user_type: null,
         only_see: 'frontend',
         page: 1,
-        page_size: 10
+        page_size: 40
       }
     }
   },
