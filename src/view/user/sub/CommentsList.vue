@@ -26,6 +26,7 @@
         v-if="previewArticle !== null"
         width="80"
         v-model="modalVisible"
+        v-highlight
       >
         <div>
           <div
@@ -44,18 +45,17 @@
           </div>
           <Divider dashed />
           <Row>
-            <Col :span="12">
+            <Col :span="12"  style="padding-right: 20px">
             用户 <em><strong>{{previewArticle.author.name}}</strong></em> 评论到:<p v-html="previewArticle.body"></p>
             </Col>
             <Col :span="12">
-            <div style="margin: 0 0 15px 0">
+            <div>
               <h3>你的回复</h3>
               <ol style="margin-left:10px;line-height:20px">
                 <li
                   v-for="r in replies"
                   v-html="r.content"
                   :key="r.id"
-                  v-highlight
                 ></li>
               </ol>
             </div>
@@ -86,7 +86,6 @@
         <p
           class="preview"
           v-html="previewArticle.article.content"
-          v-highlight
         ></p>
       </Modal>
     </Row>
@@ -107,8 +106,6 @@ export default {
           title: '文章',
           key: 'article',
           render: (h, p) => {
-            console.log(p)
-
             return h('span', {}, p.row.article.title)
           }
         },
@@ -164,7 +161,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.delete(params.row.id, params.index)
+                      this.delete(params.row.id, params.row.body)
                     }
                   }
                 },
@@ -178,8 +175,8 @@ export default {
   },
 
   methods: {
-    delete (id, index) {
-      this.$emit('delete-comment', id)
+    delete (id, content) {
+      this.$emit('delete-comment', { id, content })
     },
 
     cancel () {
@@ -198,7 +195,6 @@ export default {
     },
 
     preview (id) {
-      console.log('emit preview: ' + id)
       this.$emit('preview', id)
       this.modalVisible = true
     },

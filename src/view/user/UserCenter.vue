@@ -2,49 +2,38 @@
   <div>
     <Row :gutter="16">
       <Col span="7">
-      <Card :bordered="false">
-        <div class="account-center-avatarHolder">
-          <div class="avatar">
-            <img :src="$store.state.user.avatorImgPath" />
+        <Card :bordered="false">
+          <div class="account-center-avatarHolder">
+            <div class="avatar">
+              <img :src="$store.state.user.avatorImgPath">
+            </div>
+            <div class="username">{{$store.state.user.name}}</div>
+            <div class="bio">{{$store.state.user.bio}}</div>
           </div>
-          <div class="username">{{$store.state.user.name}}</div>
-          <div class="bio">{{$store.state.user.bio}}</div>
-        </div>
-      </Card>
+        </Card>
       </Col>
 
       <Col span="17">
-      <Card :bordered="false">
-        <Tabs value="articles"
-          @on-click="onClick"
-          >
-          <TabPane
-            label="文章"
-            name="articles"
-          >
-            <my-articles></my-articles>
-          </TabPane>
-          <TabPane
-            label="文章评论列表"
-            name="comments"
-          >
-            <comments-list :comments="comments"
-              @page-change="pageChange"
-              @page-size-change="pageSizeChange"
-              @preview="commentShow"
-              @submit-comment="submitComment"
-              @click-cancel="clickCancel"
-              @delete-comment="deleteComment"
-              :previewArticle="showComment"
-              :replies="replies"
-            ></comments-list>
-          </TabPane>
-          <TabPane
-            label="标签三"
-            name="name3"
-          >标签三的内容</TabPane>
-        </Tabs>
-      </Card>
+        <Card :bordered="false">
+          <Tabs value="articles" @on-click="onClick">
+            <TabPane label="文章" name="articles">
+              <my-articles></my-articles>
+            </TabPane>
+            <TabPane label="文章评论列表" name="comments">
+              <comments-list
+                :comments="comments"
+                @page-change="pageChange"
+                @page-size-change="pageSizeChange"
+                @preview="commentShow"
+                @submit-comment="submitComment"
+                @click-cancel="clickCancel"
+                @delete-comment="deleteComment"
+                :previewArticle="showComment"
+                :replies="replies"
+              ></comments-list>
+            </TabPane>
+          </Tabs>
+        </Card>
       </Col>
     </Row>
   </div>
@@ -67,10 +56,16 @@ export default {
     }
   },
   methods: {
-    deleteComment (id) {
+    deleteComment ({ id, content }) {
       this.$Modal.confirm({
         title: `删除`,
-        content: '确认要删除这评论吗？',
+        render: (h) => {
+          return h('div', {}, ['确定删除这条评论吗？', h('p', {
+            domProps: {
+              innerHTML: content
+            }
+          })])
+        },
         loading: true,
         onOk: () => {
           destroy(id)

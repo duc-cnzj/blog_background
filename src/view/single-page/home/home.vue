@@ -80,8 +80,8 @@ export default {
     return {
       query: {
         unit: 'day',
-        sub_week: 1,
-        section: 6
+        sub_week: '1',
+        section: '12'
       },
       tableColumns: [
         {

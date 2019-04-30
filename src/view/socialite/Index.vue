@@ -2,6 +2,23 @@
   <div>
     <Row>
       <Card style="margin-top: 20px">
+        <Row>
+          <Col span="8" offset="6">
+            <Form ref="query" :model="query" :label-width="120">
+              <Form-item label="id">
+                <Input v-model.number="query.id" placeholder="请输入查询的 id"></Input>
+              </Form-item>
+              <Form-item label="昵称">
+                <Input v-model="query.name" placeholder="请输入查询的昵称"></Input>
+              </Form-item>
+
+              <Form-item>
+                <Button type="primary" @click="handleSubmit">搜索</Button>
+                <Button type="dashed" @click="handleReset" style="margin-left: 8px">重置</Button>
+              </Form-item>
+            </Form>
+          </Col>
+        </Row>
         <p slot="title">第三方用户</p>
 
         <Table border :data="dataSet" :columns="columns" style="margin-top:20px"></Table>
@@ -27,7 +44,9 @@ export default {
     return {
       query: {
         page: 1,
-        page_size: 10
+        page_size: 10,
+        name: null,
+        id: null
       },
       dataSet: [],
       columns: [
@@ -106,6 +125,15 @@ export default {
       console.log(data)
       this.dataSet = data.data
       this.data = data
+    },
+
+    handleSubmit () {
+      this.fetch()
+    },
+
+    handleReset () {
+      this.query.name = null
+      this.query.id = null
     }
   }
 }
