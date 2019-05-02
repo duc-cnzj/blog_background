@@ -1,38 +1,40 @@
 <template>
   <div>
     <Row>
-      <Card style="margin-top: 20px">
-        <Row>
-          <Col span="8" offset="6">
-            <Form ref="query" :model="query" :label-width="120">
-              <Form-item label="id">
-                <Input v-model.number="query.id" placeholder="请输入查询的 id"></Input>
-              </Form-item>
-              <Form-item label="昵称">
-                <Input v-model="query.name" placeholder="请输入查询的昵称"></Input>
-              </Form-item>
+      <Col span="6">
+        <Card>
+          <Form ref="query" :model="query" :label-width="40">
+            <Form-item label="id">
+              <Input v-model.number="query.id" placeholder="请输入查询的 id"></Input>
+            </Form-item>
+            <Form-item label="昵称">
+              <Input v-model="query.name" placeholder="请输入查询的昵称"></Input>
+            </Form-item>
 
-              <Form-item>
-                <Button type="primary" @click="handleSubmit">搜索</Button>
-                <Button type="dashed" @click="handleReset" style="margin-left: 8px">重置</Button>
-              </Form-item>
-            </Form>
-          </Col>
-        </Row>
-        <p slot="title">第三方用户</p>
+            <Form-item>
+              <Button type="primary" @click="handleSubmit">搜索</Button>
+              <Button type="dashed" @click="handleReset" style="margin-left: 8px">重置</Button>
+            </Form-item>
+          </Form>
+        </Card>
+      </Col>
+      <Col span="16" offset="1">
+        <Card>
+          <p slot="title">第三方用户</p>
 
-        <Table border :data="dataSet" :columns="columns" style="margin-top:20px"></Table>
+          <Table border :data="dataSet" :columns="columns" style="margin-top:20px"></Table>
 
-        <Page
-          v-if="Object.keys(data).length"
-          :total="data.meta.total"
-          :page-size="Number(data.meta.per_page)"
-          style="margin-top:20px"
-          @on-change="onChange"
-          @on-page-size-change="onPageSizeChange"
-          show-sizer
-        ></Page>
-      </Card>
+          <Page
+            v-if="Object.keys(data).length"
+            :total="data.meta.total"
+            :page-size="Number(data.meta.per_page)"
+            style="margin-top:20px"
+            @on-change="onChange"
+            @on-page-size-change="onPageSizeChange"
+            show-sizer
+          ></Page>
+        </Card>
+      </Col>
     </Row>
   </div>
 </template>
@@ -134,6 +136,7 @@ export default {
     handleReset () {
       this.query.name = null
       this.query.id = null
+      this.fetch()
     }
   }
 }
