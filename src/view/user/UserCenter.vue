@@ -1,7 +1,7 @@
 <template>
   <div>
     <Row :gutter="16">
-      <Col span="7">
+      <Col span="6">
         <Card :bordered="false">
           <div class="account-center-avatarHolder">
             <div class="avatar">
@@ -13,7 +13,7 @@
         </Card>
       </Col>
 
-      <Col span="17">
+      <Col span="18">
         <Card :bordered="false">
           <Tabs value="articles" @on-click="onClick">
             <TabPane label="文章" name="articles">
