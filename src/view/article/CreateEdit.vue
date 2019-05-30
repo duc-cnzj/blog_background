@@ -270,18 +270,12 @@ export default {
                 this.$router.push({ name: 'article_list' })
                 this.$Message.success('文章更新成功!')
               })
-              .catch(err => {
-                this.$Message.error(err.data.error.message)
-              })
           } else {
             store(this.formData)
               .then(() => {
                 localStorage.markdownContent = ''
                 this.$router.push({ name: 'article_list' })
                 this.$Message.success('文章添加成功!')
-              })
-              .catch(err => {
-                this.$Message.error(err.data.error.message)
               })
           }
         } else {
