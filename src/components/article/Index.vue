@@ -162,6 +162,7 @@ export default {
         {
           title: '是否隐藏',
           key: 'display',
+          width: 90,
           render: (h, p) => {
             return h('i-switch', {
               attrs: {
@@ -179,6 +180,7 @@ export default {
         {
           title: '置顶',
           key: 'display',
+          width: 90,
           render: (h, p) => {
             return h('i-switch', {
               attrs: {
@@ -196,7 +198,7 @@ export default {
         {
           title: '预览',
           key: 'preview',
-          width: 150,
+          width: 70,
           align: 'center',
           render: (h, params) => {
             return h('Button', {
@@ -222,7 +224,7 @@ export default {
         {
           title: 'Action',
           key: 'action',
-          width: 150,
+          width: 140,
           align: 'center',
           render: (h, params) => {
             return h('div', [
