@@ -76,7 +76,6 @@ export default {
             })
             .catch(e => {
               this.$Modal.remove()
-              this.$Message.error(e.data.error.message)
             })
         }
       })

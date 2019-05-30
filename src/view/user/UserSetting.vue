@@ -138,11 +138,6 @@ export default {
         .then(() => {
           this.$Message.success('用户信息更新成功！')
         })
-        .catch(e => {
-          console.log(e)
-
-          this.$Message.error('用户信息更新失败！')
-        })
     }
   }
 }

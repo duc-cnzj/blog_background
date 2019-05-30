@@ -81,18 +81,13 @@ export default {
 
   methods: {
     doEdit () {
-      console.log(this.userEdit)
       update(this.userEdit).then(() => {
         this.$Message.success('用户信息更新成功！')
         this.fetchUser()
-      }).catch(e => {
-        this.$Message.error(e.data.error.message)
       })
     },
     editUser (id) {
       show(id).then(res => {
-        console.log(res)
-
         this.modalVisable = true
         this.userEdit = res.data
       })
@@ -106,8 +101,6 @@ export default {
       this.fetchUser({ pageSize })
     },
     deleteUser ({ id, index }) {
-      console.log('id', id)
-      console.log('index', index)
       deleteUser(id)
         .then(() => {
           this.$Modal.remove()
@@ -116,10 +109,7 @@ export default {
           this.users.meta.total = this.users.meta.total - 1
         })
         .catch(e => {
-          console.log('deleteuser', e)
-
           this.$Modal.remove()
-          this.$Message.error(e.data.error.message)
         })
     },
 
@@ -130,7 +120,6 @@ export default {
         query
       }).then(res => {
         this.users = res
-        console.log(this.users)
       })
     }
   }

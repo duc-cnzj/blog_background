@@ -282,14 +282,12 @@ export default {
         setTop(id).then(() => {
           this.$Message.success('操作成功')
         }).catch(() => {
-          this.$Message.error('操作失败')
           this.fetchArticles()
         })
       } else {
         cancelSetTop(id).then(() => {
           this.$Message.success('操作成功')
         }).catch(() => {
-          this.$Message.error('操作失败')
           this.fetchArticles()
         })
       }
@@ -299,7 +297,6 @@ export default {
       changedisplay(id).then(() => {
         this.$Message.success('操作成功')
       }).catch(() => {
-        this.$Message.error('操作失败')
         this.fetchArticles()
       })
     },
@@ -348,7 +345,6 @@ export default {
             })
             .catch(e => {
               this.$Modal.remove()
-              this.$Message.error(e.data.error.message)
             })
         }
       })
