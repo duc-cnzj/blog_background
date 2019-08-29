@@ -81,9 +81,14 @@ export default {
                 }
               }),
 
-              h('p', {
+              h('a', {
                 style: {
-                  fontSize: '16px'
+                  fontSize: '16px',
+                  display: 'block'
+                },
+                attrs: {
+                  href: `https://github.com/${params.row.name}`,
+                  target: '_blank'
                 }
               }, params.row.name)
             ])
