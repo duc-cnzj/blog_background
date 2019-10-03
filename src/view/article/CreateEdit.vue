@@ -211,7 +211,7 @@ export default {
       this.formData.title = data.title
       this.formData.desc = data.desc
       this.formData.display = data.display
-      this.formData.headImage = data.headImage
+      this.formData.headImage = data.head_image
       this.formData.tags = _.map(data.tags, 'name')
       this.formData.category = data.category.name
 
