@@ -23,7 +23,7 @@
     "iview": "^3.0.0",
     "iview-area": "^1.5.17",
     "js-cookie": "^2.2.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
     "simplemde": "^1.11.2",
